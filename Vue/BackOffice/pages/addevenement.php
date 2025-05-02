@@ -10,7 +10,8 @@ $error = "";
       isset($_POST["lieu"]) &&
       isset($_POST["nbrPlace_restante"]) &&
       isset($_POST["nbrPlace_occupe"]) &&
-      isset($_POST["tarification"])
+      isset($_POST["tarification"])&&
+      isset($_POST["typeParking"])
   ) {
       if (
           !empty($_POST['nomE']) &&
@@ -18,7 +19,8 @@ $error = "";
           !empty($_POST["lieu"]) &&
           !empty($_POST["nbrPlace_restante"]) &&
           !empty($_POST["nbrPlace_occupe"]) &&
-          !empty($_POST["tarification"]) 
+          !empty($_POST["tarification"])&&
+          !empty($_POST["typeParking"])
       ) {
           $evenement = new Evenement(
               null,
@@ -27,13 +29,16 @@ $error = "";
               $_POST['lieu'],
               $_POST['nbrPlace_restante'],
               $_POST['nbrPlace_occupe'],
-              $_POST['tarification']
+              $_POST['tarification'],
+              $_POST['typeParking'] 
           );
           $evenementE->AjouterEvenement($evenement);
           header('Location:listevenement.php');
+          exit(); 
       }
       }
   ?>
+  
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -274,13 +279,29 @@ $error = "";
             <input type="number" class="form-control" name="nbrPlace_occupe">
             <span id="error-nbrPlace_occupe" class="error-message"></span>
           </div>
+
           <div class="mb-3">
             <label class="form-label">Tarification:</label>
             <input type="number" class="form-control" name="tarification">
             <span id="error-tarification" class="error-message"></span>
           </div> 
+
+          <!-- Ajout Type de Parking -->
+        <div class="mb-3">
+          <label class="form-label">Type de Parking:</label>
+          <select class="form-control" name="typeParking">
+            <option value="">-- Sélectionnez --</option>
+            <option value="Classique">Classique</option>
+            <option value="VIP">VIP</option>
+            <option value="Électrique">Électrique</option>
+            <option value="Handicapé">Handicapé</option>
+          </select>
+          <span id="error-typeParking" class="error-message"></span>
+        </div>
+
+          
           <div class="d-flex justify-content-between">
-            <a href="Evenement.php" class="btn btn-secondary">Back to list</a>
+            <a href="Evenement.php" class="btn btn-secondary">Page Principale</a>
             <button type="submit" class="btn btn-primary">Submit</button>
           </div>
         </form>
@@ -288,67 +309,77 @@ $error = "";
     </div>
   </main>
 
+
+
+
 <!-- Validation Script -->
-  <script>
-  function validateForm() {
-    const formFields = {
-      nomE: document.getElementsByName('nomE')[0].value.trim(),
-      date: document.getElementsByName('date')[0].value.trim(),
-      lieu: document.getElementsByName('lieu')[0].value.trim(),
-      nbrPlace_restante: document.getElementsByName('nbrPlace_restante')[0].value,
-      nbrPlace_occupe: document.getElementsByName('nbrPlace_occupe')[0].value,
-      tarification: document.getElementsByName('tarification')[0].value
-    };
+<script>
+function validateForm() {
+  const formFields = {
+    nomE: document.getElementsByName('nomE')[0].value.trim(),
+    date: document.getElementsByName('date')[0].value.trim(),
+    lieu: document.getElementsByName('lieu')[0].value.trim(),
+    nbrPlace_restante: document.getElementsByName('nbrPlace_restante')[0].value.trim(),
+    nbrPlace_occupe: document.getElementsByName('nbrPlace_occupe')[0].value.trim(),
+    tarification: document.getElementsByName('tarification')[0].value.trim(),
+    typeParking: document.getElementsByName('typeParking')[0].value.trim()
+  };
 
-    // Reset all error messages
-    for (const key in formFields) {
-      const errorElement = document.getElementById(`error-${key}`);
-      if (errorElement) errorElement.innerHTML = '';
-    }
-
-    let hasErrors = false;
-
-    // Validation rules
-    if (!formFields.nomE) {
-      document.getElementById('error-nomE').innerHTML = "Nom est requis";
-      hasErrors = true;
-    } else if (formFields.nomE.length <= 2) {
-      document.getElementById('error-nomE').innerHTML = "Nom invalide";
-      hasErrors = true;
-    }
-
-    if (!formFields.date) {
-      document.getElementById('error-date').innerHTML = "Date est requise";
-      hasErrors = true;
-    }
-
-    if (!formFields.lieu) {
-      document.getElementById('error-lieu').innerHTML = "Lieu est requis";
-      hasErrors = true;
-    } else if (formFields.lieu.length <= 2) {
-      document.getElementById('error-lieu').innerHTML = "Lieu invalide";
-      hasErrors = true;
-    }
-
-    if (!formFields.nbrPlace_restante) {
-      document.getElementById('error-nbrPlace_restante').innerHTML = "Places restantes requises";
-      hasErrors = true;
-    }
-
-    if (!formFields.nbrPlace_occupe) {
-      document.getElementById('error-nbrPlace_occupe').innerHTML = "Places occupées requises";
-      hasErrors = true;
-    }
-
-    if (!formFields.tarification) {
-      document.getElementById('error-tarification').innerHTML = "Tarification requise";
-      hasErrors = true;
-    }
-
-    return !hasErrors;
+  // Reset all error messages
+  for (const key in formFields) {
+    const errorElement = document.getElementById(`error-${key}`);
+    if (errorElement) errorElement.innerHTML = '';
   }
+
+  let hasErrors = false;
+
+  // Validation rules
+  if (!formFields.nomE) {
+    document.getElementById('error-nomE').innerHTML = "Nom est requis";
+    hasErrors = true;
+  } else if (formFields.nomE.length <= 2) {
+    document.getElementById('error-nomE').innerHTML = "Nom invalide";
+    hasErrors = true;
+  }
+
+  if (!formFields.date) {
+    document.getElementById('error-date').innerHTML = "Date est requise";
+    hasErrors = true;
+  }
+
+  if (!formFields.lieu) {
+    document.getElementById('error-lieu').innerHTML = "Lieu est requis";
+    hasErrors = true;
+  } else if (formFields.lieu.length <= 2) {
+    document.getElementById('error-lieu').innerHTML = "Lieu invalide";
+    hasErrors = true;
+  }
+
+  if (!formFields.nbrPlace_restante) {
+    document.getElementById('error-nbrPlace_restante').innerHTML = "Places restantes requises";
+    hasErrors = true;
+  }
+
+  if (!formFields.nbrPlace_occupe) {
+    document.getElementById('error-nbrPlace_occupe').innerHTML = "Places occupées requises";
+    hasErrors = true;
+  }
+
+  if (!formFields.tarification) {
+    document.getElementById('error-tarification').innerHTML = "Tarification requise";
+    hasErrors = true;
+  }
+
+  if (!formFields.typeParking) {
+    document.getElementById('error-typeParking').innerHTML = "Type de parking est requis";
+    hasErrors = true;
+  }
+
+  return !hasErrors;
+}
 </script>
 <!-- Scripts -->
+
 
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
   <script src="../assets/js/bootstrap.min.js"></script>

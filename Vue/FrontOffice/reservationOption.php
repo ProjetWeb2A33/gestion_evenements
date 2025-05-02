@@ -75,163 +75,24 @@ $conn->close();
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
   <style>
-:root {
-  --primary-color: #0d3f72;       
-  --primary-dark: #08284d;        
-  --secondary-color: #0a1d37;    
-  --accent-color: #3a5cb3;        /* Bleu vif */
-  --light-color: #f8fafc;         /* Fond très légèrement bleuté */
-  --dark-color: #2d3748;          /* Texte foncé doux */
-  --text-color: #4a5568;          /* Texte principal */
-  --section-bg: #f5f7fa;          /* Arrière-plan des sections */
-  --card-bg: #ffffff;             /* Fond des cartes */
-  --border-color: rgba(0,0,0,0.08); /* Bordures subtiles */
-  --gradient: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
-}
-    
-    /* Header & Navigation */
-    .header {
-      background: rgba(255, 255, 255, 0.98);
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-      backdrop-filter: blur(10px);
-    }
-    
-    .sitename {
-  font-family: Arial, sans-serif; /* juste changer la police */
-  font-weight: 700;
-  color: var(--secondary-color);
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-    
-    .navmenu ul li a {
-      position: relative;
-      color: var(--dark-color);
-      font-weight: 500;
-      transition: all 0.3s ease;
-    }
-    
-    .navmenu ul li a:hover,
-    .navmenu ul li a.active {
-      color: var(--primary-color);
-    }
-    
-    .navmenu ul li a:after {
-      content: '';
-      position: absolute;
-      bottom: -5px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: var(--gradient);
-      transition: width 0.3s ease;
-    }
-    
-    .navmenu ul li a:hover:after,
-    .navmenu ul li a.active:after {
-      width: 100%;
-    }
-    
-    .btn-getstarted {
-      background: var(--gradient);
-      border: none;
-      color: white;
-      font-weight: 600;
-      padding: 10px 25px;
-      border-radius: 50px;
-      box-shadow: 0 5px 15px rgba(74, 166, 255, 0.4);
-      transition: all 0.3s ease;
-    }
-    
-    .btn-getstarted:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(74, 166, 255, 0.6);
-    }
-    
-    /* Hero Section */
-    .page-title {
-      position: relative;
-      padding: 180px 0 120px;
-      background: linear-gradient(rgba(10, 29, 55, 0.85), rgba(10, 29, 55, 0.85)), url('assets/img/55.png') center/cover no-repeat;
-      color: white;
-      text-align: center;
-    }
-    
-    .page-title h1 {
-      font-family: Arial, sans-serif;
-      font-size: 3.5rem;
-      font-weight: 700;
-      margin-bottom: 20px;
-      animation: fadeInDown 1s ease;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    }
-    
-    .page-title p {
-      font-size: 1.2rem;
-      max-width: 700px;
-      margin: 0 auto 30px;
-      animation: fadeInUp 1s ease;
-      opacity: 0.9;
-    }
-    /* Dropdown styling */
-    .dropdown-menu {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      min-width: 220px;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-      padding: 10px 0;
-      opacity: 0;
-      transform: translateY(10px);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      z-index: 1000;
-      border: none;
-    }
-  
-    .nav-item.dropdown:hover .dropdown-menu {
-      display: block;
-      opacity: 1;
-      transform: translateY(0);
-    }
-  
-    .dropdown-item {
-      padding: 12px 25px;
-      color: var(--secondary-color) !important;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      transition: all 0.3s ease;
-    }
-  
-    .dropdown-item:hover {
-      background: rgba(13, 63, 114, 0.05);
-      padding-left: 30px;
-    }
-  
-    .dropdown-item i {
-      color: var(--primary-color);
-      font-size: 1.1em;
-      width: 24px;
-      text-align: center;
-    }
-
-/*moi*/
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       background-color: #f4f4f4;
     }
     header {
-      background-color:rgb(204, 0, 150);
+      background-color: #0077cc;
       color: white;
       padding: 20px;
       text-align: center;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 20px;
+      background:lightgrey;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
     .event-card {
       border: 1px solid #ddd;
@@ -291,26 +152,28 @@ $conn->close();
 
 </head>
 
-<body class="evenement-page">
+<body class="service-details-page">
 
   <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
-      <a href="about.php" class="logo d-flex align-items-center me-auto">
+      <a href="index.html" class="logo d-flex align-items-center me-auto">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+        <!-- <img src="assets/img/logo.png" alt=""> -->
         <h1 class="sitename">EasyParki</h1>
       </a>
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="index.html">Accueil</a></li>
-          <li><a href="Stationnement.html">Stationnement</a></li>
-          <li><a href="transport public.html">Vacances</a></li>
-          <li><a href="Covoiturage.html">Covoiturage</a></li>
-          <li><a href="Recharge.html">Service</a></li>
+          <li><a href="index.php">Home<br></a></li>
+          <li><a href="Stationement.php">Stationnement</a></li>
+          <li><a href="services.php">Services</a></li>
+          <li><a href="vacance.php">Vacances</a></li>
           <li class="dropdown">
-             <a href="evenement.php"><span>Événements</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+             <a href="evenement.php"><span>Événement</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
               <ul>
-                <li><a href="evenement.php">Page Événement</a></li>                
+                <li><a href="evenement.php">Page Événement</a></li>
+                
                 <li><a href="option.php">Options Stationnements</a></li>
                 <li><a href="billets.php">Acces Aux Detenteurs De Billets</a></li>
                 <li><a href="listparticipation.php">Planification Et Ajustement De la Duree Du Stationnement</a></li>
@@ -319,28 +182,31 @@ $conn->close();
                 <li><a href="addparticipation.php">Espace De Stationnement Pour Food Trucks Et Exposant</a></li>
               </ul>
            </li>
-          <li><a href="contact.html">Contact</a></li>
+
+          <li><a href="covoiturage.php">Covoiturage</a></li>
+          <li><a href="contact.php">Contact</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
 
-      <a class="btn-getstarted" href="get-a-quote.html">Créer un compte</a>
+      <a class="btn-getstarted" href="creercompte.">Créer un compte</a>
 
     </div>
+
   </header>
 
   <main class="main">
-    <!-- Hero Section -->
-  <div class="page-title dark-background" data-aos="fade" style="background-image: url(assets/image/evenement.jpg);">
-    <div class="container position-relative">
-      <h1>Réserver Sans Hésiter</h1>
-     
-      <div class="mt-4">
-        <a href="index.php" class="btn btn-light btn-lg px-4 me-2">Home</a>
-        <a href="evenement.php" class="btn btn-outline-light btn-lg px-4">Evenements</a>
-      </div>
-    </div>
-  </div><!-- End Hero Section -->
+    <!-- Page Title -->
+    <div class="page-title dark-background" data-aos="fade" style="background-image: url(assets/image/events.jpeg);">
+        <h1>Réservation de Stationnement Spécifique pour les Événements</h1>
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a href="index.html">Home</a></li>
+            <li class="current">Service</li>
+          </ol>
+        </nav>
+      
+    </div><!-- End Page Title -->
 
   
     <div class="container py-5" id="reservation-form">
@@ -394,7 +260,23 @@ $conn->close();
                                 </div>
                             </div>
                             
-                            <!-- Téléphone -->
+                            <!-- Type de stationnement -->
+                            <div class="col-12">
+                             <div class="form-floating">
+                                <select class="form-control" name="typeParking" id="typeParking" required>
+                                 <option value="VIP">VIP (+5 DT)</option>
+                                 <option value="handicape">Place Handicape (+10 DT)</option>
+                                 <option value="couverte">Place Couverte (+15 DT)</option>
+                                 <option value="electrique">Electrique (+20 DT)</option>
+                                </select>
+                                <label for="typeParking"><i class="bi bi-car-front me-2"></i>Type de Stationnement</label>
+                                <div class="invalid-feedback">
+                                  Veuillez sélectionner un type de stationnement.
+                                </div>
+                              </div>
+                           </div>
+
+                            <!-- Numéro de téléphone -->
                             <div class="col-12">
                                 <div class="form-floating">
                                     <input type="tel" class="form-control" id="numTel_participant" name="numTel_participant" placeholder=" " required>
@@ -404,7 +286,7 @@ $conn->close();
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <!-- Bouton de soumission -->
                             <div class="col-12 mt-4">
                                 <button type="submit" class="btn btn-success btn-lg w-100 py-3">
@@ -442,6 +324,7 @@ $conn->close();
         </div>
     </div>
 </div>
+
 
 <style>
     /* Style personnalisé */

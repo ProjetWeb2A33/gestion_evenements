@@ -13,7 +13,8 @@ if (isset($_POST["id"])) {
         isset($_POST["lieu"]) &&
         isset($_POST["nbrPlace_restante"]) &&
         isset($_POST["nbrPlace_occupe"]) &&
-        isset($_POST["tarification"])
+        isset($_POST["tarification"])&&
+        isset($_POST["typeParking"])
     ) {
         if (
             !empty($_POST["nomE"]) &&
@@ -21,7 +22,8 @@ if (isset($_POST["id"])) {
             !empty($_POST["lieu"]) &&
             !empty($_POST["nbrPlace_restante"]) &&
             !empty($_POST["nbrPlace_occupe"]) &&
-            !empty($_POST["tarification"])
+            !empty($_POST["tarification"])&&
+            !empty($_POST["typeParking"])
         ) {
             $updatedevenement = new Evenement(
                 $_POST['id'],
@@ -30,7 +32,8 @@ if (isset($_POST["id"])) {
                 $_POST['lieu'],
                 $_POST['nbrPlace_restante'],
                 $_POST['nbrPlace_occupe'],
-                $_POST['tarification']
+                $_POST['tarification'],
+                $_POST['typeParking']
             );
             $evenementE->ModifierEvenement($updatedevenement, $_POST['id']);
             header('Location: listevenement.php');
@@ -300,6 +303,17 @@ if (isset($_POST["id"])) {
                 <label>Lieu</label>
                 <input type="text" name="lieu" class="form-control" value="<?= $evenement['lieu'] ?>">
               </div>
+
+              <!-- Type de Parking -->
+              <div class="form-group">
+                <label>Type de Parking</label>
+                <select name="typeParking" class="form-control">
+                  <option value="Standard" <?= $evenement['typeParking'] == 'Standard' ? 'selected' : '' ?>>Standard</option>
+                  <option value="VIP" <?= $evenement['typeParking'] == 'VIP' ? 'selected' : '' ?>>VIP</option>
+                  <option value="Electrique" <?= $evenement['typeParking'] == 'Electrique' ? 'selected' : '' ?>>Electrique</option>
+                  <option value="Handicapé" <?= $evenement['typeParking'] == 'Handicapé' ? 'selected' : '' ?>>Handicapé</option>
+                </select>
+              </div>
             </div>
             
             <div class="col-md-6">
@@ -314,20 +328,19 @@ if (isset($_POST["id"])) {
               </div>
             </div>
           </div>
+
           <div class="form-group">
-                 <label>Tarification</label>
-                 <input type="number" name="tarification" class="form-control" value="<?= $evenement['tarification'] ?>">
-              </div>
-            </div>
+            <label>Tarification</label>
+            <input type="number" name="tarification" class="form-control" value="<?= $evenement['tarification'] ?>">
           </div>
-          
+
           <div class="text-end mt-4">
             <div class="error-message" id="errorMessage"></div>
             <button type="submit" class="btn btn-primary">
-              <i class="fas fa-save me-2"></i>Mettre à jour
+              <i class="fas fa-save me-2"></i> Mettre à jour
             </button>
             <a href="listevenement.php" class="btn btn-secondary">
-              <i class="fas fa-times me-2"></i>Annuler
+              <i class="fas fa-times me-2"></i> Annuler
             </a>
           </div>
         </form>
@@ -338,38 +351,40 @@ if (isset($_POST["id"])) {
 
   <!-- Validation Script -->
   <script>
-    function validateForm() {
-      const errorMessage = document.getElementById('errorMessage');
-      let errors = [];
-      
-      // Get form values
-      const nomE = document.getElementsByName('nomE')[0].value.trim();
-      const date = document.getElementsByName('date')[0].value;
-      const lieu = document.getElementsByName('lieu')[0].value.trim();
-      const nbrPlace_restante = document.getElementsByName('nbrPlace_restante')[0].value;
-      const nbrPlace_occupe = document.getElementsByName('nbrPlace_occupe')[0].value;
-      const tarification = document.getElementsByName('tarification')[0].value;
+  function validateForm() {
+    const errorMessage = document.getElementById('errorMessage');
+    let errors = [];
+    
+    // Get form values
+    const nomE = document.getElementsByName('nomE')[0].value.trim();
+    const date = document.getElementsByName('date')[0].value;
+    const lieu = document.getElementsByName('lieu')[0].value.trim();
+    const nbrPlace_restante = document.getElementsByName('nbrPlace_restante')[0].value;
+    const nbrPlace_occupe = document.getElementsByName('nbrPlace_occupe')[0].value;
+    const tarification = document.getElementsByName('tarification')[0].value;
+    const typeParking = document.getElementsByName('typeParking')[0].value;
 
-      // Validation rules
-      if (!nomE) errors.push("Le nom de l'evenement est obligatoire");
-      if (!date) errors.push("La date est obligatoire");
-      if (!lieu) errors.push("Le lieu est obligatoire");
-      if (!nbrPlace_restante) errors.push("Le nombre de places restantes est obligatoire");
-      if (!nbrPlace_occupe) errors.push("Le nombre de places occupe est obligatoire");
-      if (!tarification) errors.push("La tarification est obligatoire");
+    // Validation rules
+    if (!nomE) errors.push("Le nom de l'evenement est obligatoire");
+    if (!date) errors.push("La date est obligatoire");
+    if (!lieu) errors.push("Le lieu est obligatoire");
+    if (!nbrPlace_restante) errors.push("Le nombre de places restantes est obligatoire");
+    if (!nbrPlace_occupe) errors.push("Le nombre de places occupe est obligatoire");
+    if (!tarification) errors.push("La tarification est obligatoire");
+    if (!typeParking) errors.push("Le type de parking est obligatoire");
 
-      if (nomE.length < 2) errors.push("Le nom est invalide");
-      if (lieu.length < 2) errors.push("Le lieu est invalide");
+    if (nomE.length < 2) errors.push("Le nom est invalide");
+    if (lieu.length < 2) errors.push("Le lieu est invalide");
 
-
-      // Display errors or submit
-      if (errors.length > 0) {
-        errorMessage.innerHTML = errors.join('<br>');
-        return false;
-      }
-      return true;
+    // Display errors or submit
+    if (errors.length > 0) {
+      errorMessage.innerHTML = errors.join('<br>');
+      return false;
     }
-  </script>
+    return true;
+  }
+</script>
+
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
   <script src="../assets/js/bootstrap.min.js"></script>

@@ -269,7 +269,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           </div>
 
           <div class="d-flex justify-content-between">
-           <a href="Evenement.php" class="btn btn-secondary">Retour</a>
+           <a href="Evenement.php" class="btn btn-secondary">Page Principale</a>
            <button type="submit" class="btn btn-primary">Soumettre</button>
           </div>
        </form>

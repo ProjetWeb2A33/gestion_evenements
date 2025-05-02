@@ -19,8 +19,8 @@ class evenementE {
         $db = config::getConnexion();
         try {
             $req = $db->prepare('
-                INSERT INTO evenement (nomE, date, lieu, nbrPlace_restante, nbrPlace_occupe, tarification)
-                VALUES (:nomE, :dateE, :lieu, :rest, :occupe, :tarif)
+                INSERT INTO evenement (nomE, date, lieu, nbrPlace_restante, nbrPlace_occupe, tarification, typeParking)
+                VALUES (:nomE, :dateE, :lieu, :rest, :occupe, :tarif, :typeParking)
             ');
             $req->execute([
                 'nomE' => $evenement->getNomE(),
@@ -28,7 +28,9 @@ class evenementE {
                 'lieu' => $evenement->getLieu(),
                 'rest' => $evenement->getNbrPlaceRestante(),
                 'occupe' => $evenement->getNbrPlaceOccupe(),
-                'tarif' => $evenement->getTarification()
+                'tarif' => $evenement->getTarification(),
+                'typeParking' => $evenement->getTypeParking()
+                
             ]);
         } catch (Exception $e) {
             die('Erreur : ' . $e->getMessage());
@@ -85,7 +87,8 @@ class evenementE {
                     lieu = :lieu, 
                     nbrPlace_restante = :rest, 
                     nbrPlace_occupe = :occupe, 
-                    tarification = :tarif 
+                    tarification = :tarif,
+                    typeParking = :typeParking 
                 WHERE idE = :id
             ');
             $req->execute([
@@ -95,7 +98,8 @@ class evenementE {
                 'lieu' => $evenement->getLieu(),
                 'rest' => $evenement->getNbrPlaceRestante(),
                 'occupe' => $evenement->getNbrPlaceOccupe(),
-                'tarif' => $evenement->getTarification()
+                'tarif' => $evenement->getTarification(),
+                'typeParking' => $evenement->getTypeParking()
             ]);
         } catch (Exception $e) {
             die('Erreur : ' . $e->getMessage());

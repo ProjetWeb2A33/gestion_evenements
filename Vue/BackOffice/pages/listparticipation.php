@@ -344,7 +344,7 @@ function confirmDelete(event, id) {
                             style="padding: 8px 20px">
                         Annuler
                     </button>
-                    <a href="deleteevenement.php?id=${id}" 
+                    <a href="deleteparticipation.php?id=${id}" 
                        class="btn" 
                        style="padding: 8px 20px; background-color: #e83e8c; color: white; border: none;">
                         Confirmer

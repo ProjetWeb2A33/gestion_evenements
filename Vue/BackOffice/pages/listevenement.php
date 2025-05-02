@@ -269,49 +269,50 @@ $liste = $pc->ListeEvenements();
       </div>
 
         
-        <table class="table table-striped align-middle">
-          <thead>
-            <tr>
-              <th>ID Evenement</th> 
-              <th>Nom Evenement</th>
-              <th>Date</th>
-              <th>Lieu</th>
-              <th> Nombre Places Disponibles</th>
-              <th>Nombre Place Occupée</th>
-              <th>Tarification</th>
-              <th>Actions</th>
-              
-            </tr>
-          </thead>
-          <tbody>
-            <?php foreach ($liste as $evenement): ?>
-            <tr>
-              <td><?= $evenement['idE'] ?></td>
-              <td><?= $evenement['nomE'] ?></td>
-              <td><?= $evenement['date'] ?></td>
-              <td><?= $evenement['lieu'] ?></td>
-              <td><?= $evenement['nbrPlace_restante'] ?></td>
-              <td><?= $evenement['nbrPlace_occupe'] ?></td>
-              <td><?= $evenement['tarification'] ?></td>
-              <td>
-              <div class="d-flex flex-column gap-2">
-                <!-- Bouton Modifier -->
-                <form method="POST" action="updateevenement.php" class="m-0">
-                  <input type="hidden" name="id" value="<?= htmlspecialchars($evenement['idE']) ?>">
-                  <button type="submit" class="btn btn-sm btn-info w-100">
-                    <i class="fas fa-edit"></i> Modifier
-                  </button>
-                </form>
-                  <!-- Bouton Supprimer -->
-                  <button type="button" class="btn btn-sm btn-danger w-100" onclick="confirmDelete(event, <?= $evenement['idE'] ?>)">
-                    <i class="fas fa-trash"></i> Supprimer
-                  </button>
-              </div>
-              </td>
-            </tr>
-            <?php endforeach; ?>
-          </tbody>
-        </table>
+      <table class="table table-striped align-middle">
+    <thead>
+        <tr>
+            <th>ID Evenement</th> 
+            <th>Nom Evenement</th>
+            <th>Date</th>
+            <th>Lieu</th>
+            <th>Nombre Places <br> Disponibles</th>
+            <th>Nombre Place <br> Occupée</th>
+            <th>Tarification</th>
+            <th>Type de <br> Parking</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($liste as $evenement): ?>
+        <tr>
+            <td><?= $evenement['idE'] ?></td>
+            <td><?= $evenement['nomE'] ?></td>
+            <td><?= $evenement['date'] ?></td>
+            <td><?= $evenement['lieu'] ?></td>
+            <td><?= $evenement['nbrPlace_restante'] ?></td>
+            <td><?= $evenement['nbrPlace_occupe'] ?></td>
+            <td><?= $evenement['tarification'] ?> Dt</td>
+            <td><?= htmlspecialchars($evenement['typeParking']) ?></td>
+            <td>
+                <div class="d-flex flex-column gap-2">
+                    <!-- Bouton Modifier -->
+                    <form method="POST" action="updateevenement.php" class="m-0">
+                        <input type="hidden" name="id" value="<?= htmlspecialchars($evenement['idE']) ?>">
+                        <button type="submit" class="btn btn-sm btn-info w-100">
+                            <i class="fas fa-edit"></i> Modifier
+                        </button>
+                    </form>
+                    <!-- Bouton Supprimer -->
+                    <button type="button" class="btn btn-sm btn-danger w-100" onclick="confirmDelete(event, <?= $evenement['idE'] ?>)">
+                        <i class="fas fa-trash"></i> Supprimer
+                    </button>
+                </div>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
       </div>
     </div>
   </main>

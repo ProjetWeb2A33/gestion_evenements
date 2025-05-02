@@ -171,31 +171,194 @@ $result = $conn->query($sql);
       </div>
     </div><!-- End Page Title -->
 
-    
-      
- 
-<style>
+    <!-- Featured Services Section -->
+    <section id="featured-services" class="featured-services section py-5">
 
-    .btn-like {
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 5px;
+  <div class="container">
+    <div class="row gy-4 justify-content-center">
+      
+      <div class="col-lg-4 col-md-6 service-item d-flex flex-column align-items-center" data-aos="fade-up" data-aos-delay="100">
+        <div class="service-icon-container d-flex align-items-center justify-content-center rounded-circle shadow-lg mb-3" style="width: 60px; height: 60px;">
+          <i class="fa-solid fa-arrows-spin fs-4 text-primary"></i>
+        </div>
+        <div class="text-center">
+          <h4 class="title text-dark mb-3">Solutions Flexibles</h4>
+          <p class="description text-muted" style="font-size: 1.1rem; line-height: 1.6;">Cette page de réservation vous permet de choisir parmi plusieurs types de stationnement adaptés à vos besoins : VIP, handicapé, électrique ou couvert. Chaque option a des avantages uniques pour garantir votre confort et faciliter l'accès à l'événement.</p>
+        </div>
+      </div>
+      <!-- End Service Item -->   
+
+    </div>
+  </div>
+
+</section>
+
+      <div class="container mt-5" id="event-list">
+    <h2 class="text-center mb-5 fw-bold" style="color: #2c3e50;">Événements Disponibles</h2>
+    
+    <!-- Barre de recherche ajoutée ici -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-md-8">
+            <div class="input-group input-group-lg shadow-sm rounded-pill">
+                <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
+                <input type="text" id="eventSearch" class="form-control border-start-0 rounded-pill" placeholder="Rechercher un événement..." aria-label="Rechercher un événement">
+                <button class="btn btn-primary rounded-pill px-4" type="button" id="searchBtn">Rechercher</button>
+            </div>
+        </div>
+    </div>
+    <?php
+    if ($result->num_rows > 0) {
+        echo '<div class="row g-4" id="eventsContainer">';
+        while ($event = $result->fetch_assoc()) {
+    ?>
+            <div class="col-md-6 col-lg-4 event-item" data-type="<?= htmlspecialchars($event['typeParking']) ?>">
+                <div class="event-card card h-100 shadow-sm border-0 overflow-hidden">
+                    <!-- Image de l'événement -->
+                    <div class="event-image" style="height: 200px; background: linear-gradient(45deg, #3498db, #2ecc71); display: flex; align-items: center; justify-content: center;">
+                        <h3 class="text-white text-center p-3 event-name"><?= htmlspecialchars($event['nomE']) ?></h3>
+                    </div>
+                    
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <span class="badge bg-primary mb-2">Événement</span>
+                                <h4 class="card-title mb-1 event-name"><?= htmlspecialchars($event['nomE']) ?></h4>
+                            </div>
+                            <div class="text-end">
+                                <div class="price-tag bg-success text-white p-2 rounded">
+                                    <span class="h5 mb-0"><?= htmlspecialchars($event['tarification']) ?> DT</span>
+                                </div>
+                                <!-- Bouton Like -->
+                                <button class="btn-like border-0 bg-transparent" data-event-id="<?= $event['idE'] ?>">
+                                 <i class="bi bi-heart fs-4 text-danger"></i> 
+                                 <span class="like-count">0</span>
+                                </button>
+                            </div>
+
+                        </div>
+                        
+                        <div class="event-meta mb-3">
+                            <p class="mb-2"><i class="bi bi-calendar-event me-2"></i> <?= htmlspecialchars($event['date']) ?></p>
+                            <p class="mb-0"><i class="bi bi-geo-alt me-2"></i> <?= htmlspecialchars($event['lieu']) ?></p>
+                        </div>
+                        
+                        <div class="d-grid">
+                            <a href="reservationOption.php?id=<?= $event['idE'] ?>" class="btn btn-primary btn-lg rounded-pill">
+                                Réserver maintenant <i class="bi bi-arrow-right ms-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    <?php
+        }
+        echo '</div>';
+    } else {
+        echo '<div class="alert alert-info text-center">Aucun événement disponible pour le moment.</div>';
     }
-    .btn-like .bi-heart-fill {
-      color: red;
-      transition: transform 0.3s;
+    ?>
+</div>
+
+<!-- Ajout du script de recherche et de filtrage -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('eventSearch');
+    const searchBtn = document.getElementById('searchBtn');
+    const typeParkingSelect = document.getElementById('typeParkingSelect');
+    const filterBtn = document.getElementById('filterBtn');
+    const eventItems = document.querySelectorAll('.event-item');
+    const eventsContainer = document.getElementById('eventsContainer');
+    
+    function performSearchAndFilter() {
+        const searchTerm = searchInput.value.toLowerCase().trim();
+        const selectedType = typeParkingSelect.value;
+        let hasResults = false;
+
+        eventItems.forEach(item => {
+            const eventName = item.querySelector('.event-name').textContent.toLowerCase();
+            const eventType = item.getAttribute('data-type');
+
+            // Vérifie si le nom de l'événement et le type de stationnement correspondent
+            if (
+                eventName.includes(searchTerm) &&
+                (selectedType === "" || eventType === selectedType)
+            ) {
+                item.style.display = 'block';
+                hasResults = true;
+            } else {
+                item.style.display = 'none';
+            }
+        });
+
+        // Afficher un message si aucun résultat
+        if (!hasResults && searchTerm !== '' && selectedType !== '') {
+            eventsContainer.innerHTML = `
+                <div class="col-12 text-center py-5">
+                    <i class="bi bi-exclamation-circle display-4 text-muted mb-3"></i>
+                    <h3 class="text-muted">Aucun événement trouvé</h3>
+                    <p class="text-muted">Essayez avec d'autres termes de recherche ou un autre type de stationnement</p>
+                </div>
+            `;
+        }
     }
-    .btn-like.liked .bi-heart {
-      display: none;
-    }
-    .btn-like.liked .bi-heart-fill {
-      display: inline-block;
-      transform: scale(1.2);
-    }
-    .btn-like .bi-heart-fill {
-      display: none;
-    }
+    
+    // Écouteurs d'événements
+    searchBtn.addEventListener('click', performSearchAndFilter);
+    filterBtn.addEventListener('click', performSearchAndFilter);
+    searchInput.addEventListener('keyup', function(e) {
+        if (e.key === 'Enter') {
+            performSearchAndFilter();
+        }
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const likeButtons = document.querySelectorAll('.btn-like');
+
+    likeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const icon = button.querySelector('i');
+            const countSpan = button.querySelector('.like-count');
+            let currentCount = parseInt(countSpan.textContent, 10);
+
+            if (button.classList.contains('liked')) {
+                // Déjà liké → annuler le like
+                button.classList.remove('liked');
+                icon.classList.replace('bi-heart-fill', 'bi-heart');
+                countSpan.textContent = currentCount - 1;
+            } else {
+                // Pas encore liké → ajouter like
+                button.classList.add('liked');
+                icon.classList.replace('bi-heart', 'bi-heart-fill');
+                countSpan.textContent = currentCount + 1;
+            }
+        });
+    });
+});
+</script>
+
+
+<style>
+.btn-like {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.btn-like .bi-heart-fill {
+    color: red;
+    transition: transform 0.3s;
+}
+.btn-like.liked .bi-heart {
+    display: none;
+}
+.btn-like.liked .bi-heart-fill {
+    display: inline-block;
+    transform: scale(1.2);
+}
+.btn-like .bi-heart-fill {
+    display: none;
+}
     /* Styles existants */
     .event-card {
         transition: transform 0.3s ease, box-shadow 0.3s ease;

@@ -24,18 +24,18 @@ $result = $conn->query($sql);
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Evenement - Template</title>
-  <meta name="description" content="">
-  <meta name="keywords" content="">
+  <title>EasyParki - Vacances</title>
+  <meta name="description" content="Planifiez vos vacances en toute simplicité avec EasyParki">
+  <meta name="keywords" content="vacances, hôtels, réservation, voyage, planification">
 
   <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/logoo.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -48,15 +48,155 @@ $result = $conn->query($sql);
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
 
-  <!-- =======================================================
-  * Template Name: Logis
-  * Template URL: https://bootstrapmade.com/logis-bootstrap-logistics-website-template/
-  * Updated: Aug 07 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
   <style>
-     .card {
+    :root {
+  --primary-color: #0d3f72;       
+  --primary-dark: #08284d;        
+  --secondary-color: #0a1d37;    
+  --accent-color: #3a5cb3;        /* Bleu vif */
+  --light-color: #f8fafc;         /* Fond très légèrement bleuté */
+  --dark-color: #2d3748;          /* Texte foncé doux */
+  --text-color: #4a5568;          /* Texte principal */
+  --section-bg: #f5f7fa;          /* Arrière-plan des sections */
+  --card-bg: #ffffff;             /* Fond des cartes */
+  --border-color: rgba(0,0,0,0.08); /* Bordures subtiles */
+  --gradient: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+}
+    
+    /* Header & Navigation */
+    .header {
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+    }
+    
+    .sitename {
+  font-family: Arial, sans-serif; /* juste changer la police */
+  font-weight: 700;
+  color: var(--secondary-color);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+    
+    .navmenu ul li a {
+      position: relative;
+      color: var(--dark-color);
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    
+    .navmenu ul li a:hover,
+    .navmenu ul li a.active {
+      color: var(--primary-color);
+    }
+    
+    .navmenu ul li a:after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--gradient);
+      transition: width 0.3s ease;
+    }
+    
+    .navmenu ul li a:hover:after,
+    .navmenu ul li a.active:after {
+      width: 100%;
+    }
+    
+    .btn-getstarted {
+      background: var(--gradient);
+      border: none;
+      color: white;
+      font-weight: 600;
+      padding: 10px 25px;
+      border-radius: 50px;
+      box-shadow: 0 5px 15px rgba(74, 166, 255, 0.4);
+      transition: all 0.3s ease;
+    }
+    
+    .btn-getstarted:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(74, 166, 255, 0.6);
+    }
+    
+    /* Hero Section */
+    .page-title {
+      position: relative;
+      padding: 180px 0 120px;
+      background: linear-gradient(rgba(10, 29, 55, 0.85), rgba(10, 29, 55, 0.85)), url('assets/img/55.png') center/cover no-repeat;
+      color: white;
+      text-align: center;
+    }
+    
+    .page-title h1 {
+      font-family: Arial, sans-serif;
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      animation: fadeInDown 1s ease;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    
+    .page-title p {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0 auto 30px;
+      animation: fadeInUp 1s ease;
+      opacity: 0.9;
+    }
+    /* Dropdown styling */
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      min-width: 220px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+      padding: 10px 0;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1000;
+      border: none;
+    }
+  
+    .nav-item.dropdown:hover .dropdown-menu {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+  
+    .dropdown-item {
+      padding: 12px 25px;
+      color: var(--secondary-color) !important;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.3s ease;
+    }
+  
+    .dropdown-item:hover {
+      background: rgba(13, 63, 114, 0.05);
+      padding-left: 30px;
+    }
+  
+    .dropdown-item i {
+      color: var(--primary-color);
+      font-size: 1.1em;
+      width: 24px;
+      text-align: center;
+    }
+
+    /*moi*/
+    .card {
       width: 100%;
       aspect-ratio: 1 / 1; /* Rend le cadre parfaitement carré */
       padding: 15px;
@@ -104,7 +244,7 @@ $result = $conn->query($sql);
         }
 
         .event-details a:hover {
-            background-color: #0056b3;
+            background-color:rgb(15, 46, 79);
         }
 
         .event-card img {
@@ -112,65 +252,62 @@ $result = $conn->query($sql);
             height: auto;
             border-top: 1px solid #ddd;
         }
+   
+   
   </style>
 </head>
 
-<body class="services-page">
+<body class="evenement-page">
 
   <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
-      <a href="index.html" class="logo d-flex align-items-center me-auto">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
-        <!-- <img src="assets/img/logo.png" alt=""> -->
+      <a href="about.php" class="logo d-flex align-items-center me-auto">
         <h1 class="sitename">EasyParki</h1>
       </a>
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="index.php">Home<br></a></li>
-          <li><a href="Stationement.php">Stationnement</a></li>
-          <li><a href="services.php">Services</a></li>
-          <li><a href="vacance.php">Vacances</a></li>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="Stationnement.html">Stationnement</a></li>
+          <li><a href="transport public.html">Vacances</a></li>
+          <li><a href="Covoiturage.html">Covoiturage</a></li>
+          <li><a href="Recharge.html">Service</a></li>
           <li class="dropdown">
              <a href="evenement.php"><span>Événements</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
               <ul>
-                <li><a href="evenement.php">Page Événement</a></li>
-                
-                <li><a href="listevenement.php">Option Stationnement VIP</a></li>
-                <li><a href="addevenement.php">Acces Aux Detenteurs De Billets</a></li>
+                <li><a href="evenement.php">Page Événement</a></li>                
+                <li><a href="option.php">Options Stationnements</a></li>
+                <li><a href="billets.php">Acces Aux Detenteurs De Billets</a></li>
                 <li><a href="listparticipation.php">Planification Et Ajustement De la Duree Du Stationnement</a></li>
                 <li><a href="addparticipation.php">Notifications De Rappel Avant L'evenement</a></li>
                 <li><a href="addparticipation.php">Suggestion De Stationnement Proche</a></li>
                 <li><a href="addparticipation.php">Espace De Stationnement Pour Food Trucks Et Exposant</a></li>
               </ul>
            </li>
-
-          <li><a href="covoiturage.php">Covoiturage</a></li>
-          <li><a href="contact.php">Contact</a></li>
+          <li><a href="contact.html">Contact</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
-      <a class="btn-getstarted" href="creercompte.php">Créer un compte</a>
+
+      <a class="btn-getstarted" href="get-a-quote.html">Créer un compte</a>
 
     </div>
   </header>
 
   <main class="main">
 
-    <!-- Page Title -->
-    <div class="page-title dark-background" data-aos="fade" style="background-image: url(assets/img/page-title-bg.jpg);">
-      <div class="container position-relative">
-        <h1>Evenement</h1>
-        <p>Facilite l’accès et le stationnement lors d’événements sportifs, concerts, salons, etc.</p>
-        <nav class="breadcrumbs">
-          <ol>
-            <li><a href="index.php">Home</a></li>
-            <li class="current">Evenement</li>
-          </ol>
-        </nav>
+    <!-- Hero Section -->
+  <div class="page-title dark-background" data-aos="fade" style="background-image: url(assets/image/evenement.jpg);">
+    <div class="container position-relative">
+      <h1>Vos Evenements Sur Mesure</h1>
+      <p>Facilite l’accès et le stationnement lors d’événements sportifs, concerts, salons, etc.</p>
+      <div class="mt-4">
+        <a href="index.php" class="btn btn-light btn-lg px-4 me-2">Home</a>
+        <a href="evenement.php" class="btn btn-outline-light btn-lg px-4">Evenements</a>
       </div>
-    </div><!-- End Page Title -->
+    </div>
+  </div><!-- End Hero Section -->
 
     <!-- Featured Services Section -->
     <section id="featured-services" class="featured-services section">
@@ -211,27 +348,195 @@ $result = $conn->query($sql);
 
 
       <div class="container mt-5" id="event-list">
-    <h2>Événements Disponibles</h2>
+    <h2 class="text-center mb-5 fw-bold" style="color: #2c3e50;">Événements Disponibles</h2>
+    
+    <!-- Barre de recherche ajoutée ici -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-md-8">
+            <div class="input-group input-group-lg shadow-sm rounded-pill">
+                <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
+                <input type="text" id="eventSearch" class="form-control border-start-0 rounded-pill" placeholder="Rechercher un événement..." aria-label="Rechercher un événement">
+                <button class="btn btn-primary rounded-pill px-4" type="button" id="searchBtn" style="background-color: #6a8fc7; border-color: #6a8fc7; color: white;">Rechercher</button>
+            </div>
+        </div>
+    </div>
 
     <?php
     if ($result->num_rows > 0) {
+        echo '<div class="row g-4" id="eventsContainer">';
         while ($event = $result->fetch_assoc()) {
     ?>
-            <div class="event-card mb-4">
-                <div class="event-details">
-                    <h3><?= htmlspecialchars($event['nomE']) ?></h3>
-                    <p>Date : <?= htmlspecialchars($event['date']) ?><br>
-                    Lieu : <?= htmlspecialchars($event['lieu']) ?></p>
-                    <a href="reservation.php?id=<?= $event['idE'] ?>">Réserver une place</a>
+            <div class="col-md-6 col-lg-4 event-item">
+                <div class="event-card card h-100 shadow-sm border-0 overflow-hidden">
+                    <!-- Image de l'événement -->
+                    <div class="event-image" style="height: 200px; background: linear-gradient(45deg, #5d8aa8, #3a5169); display: flex; align-items: center; justify-content: center;">
+                        <h3 class="text-white text-center p-3 event-name"><?= htmlspecialchars($event['nomE']) ?></h3>
+                    </div>
+                    
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <span class="badge bg-primary mb-2">Événement</span>
+                                <h4 class="card-title mb-1 event-name"><?= htmlspecialchars($event['nomE']) ?></h4>
+                            </div>
+                            <div class="text-end">
+                                <div class="price-tag bg-success text-white p-2 rounded">
+                                    <span class="h5 mb-0"><?= htmlspecialchars($event['tarification']) ?> DT</span>
+                                </div>
+                                <!-- Bouton Like -->
+                                <button class="btn-like border-0 bg-transparent" data-event-id="<?= $event['idE'] ?>">
+                                  <i class="bi bi-heart fs-4 text-danger"></i> 
+                                  <span class="like-count">0</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="event-meta mb-3">
+                            <p class="mb-2"><i class="bi bi-calendar-event me-2"></i> <?= htmlspecialchars($event['date']) ?></p>
+                            <p class="mb-0"><i class="bi bi-geo-alt me-2"></i> <?= htmlspecialchars($event['lieu']) ?></p>
+                        </div>
+                        
+                        <div class="d-grid">
+                          <a href="reservation.php?id=<?= $event['idE'] ?>" 
+                           class="btn btn-primary btn-lg rounded-pill"style="background-color: #a8d8b9; border-color: #a8d8b9; color: #1a3e29;">Réserver maintenant <i class="bi bi-arrow-right ms-2"></i>
+                          </a>
+                       </div>
+                    </div>
                 </div>
             </div>
     <?php
         }
+        echo '</div>';
     } else {
-        echo "Aucun événement trouvé.";
+        echo '<div class="alert alert-info text-center">Aucun événement disponible pour le moment.</div>';
     }
     ?>
+</div>
 
+<!-- Ajout du script de recherche -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('eventSearch');
+    const searchBtn = document.getElementById('searchBtn');
+    const eventItems = document.querySelectorAll('.event-item');
+    const eventsContainer = document.getElementById('eventsContainer');
+    
+    function performSearch() {
+        const searchTerm = searchInput.value.toLowerCase().trim();
+        let hasResults = false;
+        
+        eventItems.forEach(item => {
+            const eventName = item.querySelector('.event-name').textContent.toLowerCase();
+            if (eventName.includes(searchTerm)) {
+                item.style.display = 'block';
+                hasResults = true;
+            } else {
+                item.style.display = 'none';
+            }
+        });
+        
+        // Afficher un message si aucun résultat
+        if (!hasResults && searchTerm !== '') {
+            eventsContainer.innerHTML = `
+                <div class="col-12 text-center py-5">
+                    <i class="bi bi-exclamation-circle display-4 text-muted mb-3"></i>
+                    <h3 class="text-muted">Aucun événement trouvé</h3>
+                    <p class="text-muted">Essayez avec d'autres termes de recherche</p>
+                </div>
+            `;
+        }
+    }
+    
+    // Écouteurs d'événements
+    searchBtn.addEventListener('click', performSearch);
+    searchInput.addEventListener('keyup', function(e) {
+        if (e.key === 'Enter') {
+            performSearch();
+        }
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const likeButtons = document.querySelectorAll('.btn-like');
+
+    likeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const icon = button.querySelector('i');
+            const countSpan = button.querySelector('.like-count');
+            let currentCount = parseInt(countSpan.textContent, 10);
+
+            if (button.classList.contains('liked')) {
+                // Déjà liké → annuler le like
+                button.classList.remove('liked');
+                icon.classList.replace('bi-heart-fill', 'bi-heart');
+                countSpan.textContent = currentCount - 1;
+            } else {
+                // Pas encore liké → ajouter like
+                button.classList.add('liked');
+                icon.classList.replace('bi-heart', 'bi-heart-fill');
+                countSpan.textContent = currentCount + 1;
+            }
+        });
+    });
+});
+</script>
+
+<style>
+
+    .btn-like {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .btn-like .bi-heart-fill {
+      color: red;
+      transition: transform 0.3s;
+    }
+    .btn-like.liked .bi-heart {
+      display: none;
+    }
+    .btn-like.liked .bi-heart-fill {
+      display: inline-block;
+      transform: scale(1.2);
+    }
+    .btn-like .bi-heart-fill {
+      display: none;
+    }
+    /* Styles existants */
+    .event-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border-radius: 15px !important;
+        overflow: hidden;
+    }
+    
+    .event-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+    }
+    
+    .price-tag {
+        font-weight: bold;
+        min-width: 80px;
+        display: inline-block;
+    }
+    
+    .event-meta {
+        background-color: #f8f9fa;
+        padding: 12px;
+        border-radius: 10px;
+    }
+    
+    /* Nouveaux styles pour la recherche */
+    .input-group-text {
+        background-color: transparent;
+    }
+    
+    #eventSearch:focus {
+        box-shadow: none;
+        border-color: #ced4da;
+    }
+</style>
     </section><!-- /Featured Services Section -->
 
     <!-- Services Section -->

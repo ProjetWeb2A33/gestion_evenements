@@ -50,11 +50,24 @@
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="index.php" class="active">Home<br></a></li>
+          <li><a href="index.php">Home<br></a></li>
           <li><a href="Stationement.php">Stationnement</a></li>
-          <li><a href="service.php">Services</a></li>
+          <li><a href="services.php">Services</a></li>
           <li><a href="vacance.php">Vacances</a></li>
-          <li><a href="evenement.php">Evenement</a></li>
+          <li class="dropdown">
+             <a href="evenement.php"><span>Événement</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+              <ul>
+                <li><a href="evenement.php">Page Événement</a></li>
+                
+                <li><a href="listevenement.php">Option Stationnement VIP</a></li>
+                <li><a href="billets.php">Acces Aux Detenteurs De Billets</a></li>
+                <li><a href="listparticipation.php">Planification Et Ajustement De la Duree Du Stationnement</a></li>
+                <li><a href="addparticipation.php">Notifications De Rappel Avant L'evenement</a></li>
+                <li><a href="addparticipation.php">Suggestion De Stationnement Proche</a></li>
+                <li><a href="addparticipation.php">Espace De Stationnement Pour Food Trucks Et Exposant</a></li>
+              </ul>
+           </li>
+
           <li><a href="covoiturage.php">Covoiturage</a></li>
           <li><a href="contact.php">Contact</a></li>
         </ul>
