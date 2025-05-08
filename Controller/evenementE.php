@@ -1,5 +1,5 @@
 <?php 
-include_once ("C:/xampp2/htdocs/ProjetWeb2A33/config/config.php");
+include_once ("C:/xampp3/htdocs/ProjetWeb2A33/config/config.php");
 
 
 class evenementE {
@@ -19,8 +19,8 @@ class evenementE {
         $db = config::getConnexion();
         try {
             $req = $db->prepare('
-                INSERT INTO evenement (nomE, date, lieu, nbrPlace_restante, nbrPlace_occupe, tarification, typeParking)
-                VALUES (:nomE, :dateE, :lieu, :rest, :occupe, :tarif, :typeParking)
+                INSERT INTO evenement (nomE, date, lieu, nbrPlace_restante, nbrPlace_occupe, tarification)
+                VALUES (:nomE, :dateE, :lieu, :rest, :occupe, :tarif)
             ');
             $req->execute([
                 'nomE' => $evenement->getNomE(),
@@ -28,8 +28,7 @@ class evenementE {
                 'lieu' => $evenement->getLieu(),
                 'rest' => $evenement->getNbrPlaceRestante(),
                 'occupe' => $evenement->getNbrPlaceOccupe(),
-                'tarif' => $evenement->getTarification(),
-                'typeParking' => $evenement->getTypeParking()
+                'tarif' => $evenement->getTarification()
                 
             ]);
         } catch (Exception $e) {
@@ -87,8 +86,7 @@ class evenementE {
                     lieu = :lieu, 
                     nbrPlace_restante = :rest, 
                     nbrPlace_occupe = :occupe, 
-                    tarification = :tarif,
-                    typeParking = :typeParking 
+                    tarification = :tarif 
                 WHERE idE = :id
             ');
             $req->execute([
@@ -98,8 +96,7 @@ class evenementE {
                 'lieu' => $evenement->getLieu(),
                 'rest' => $evenement->getNbrPlaceRestante(),
                 'occupe' => $evenement->getNbrPlaceOccupe(),
-                'tarif' => $evenement->getTarification(),
-                'typeParking' => $evenement->getTypeParking()
+                'tarif' => $evenement->getTarification()
             ]);
         } catch (Exception $e) {
             die('Erreur : ' . $e->getMessage());

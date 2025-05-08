@@ -1,6 +1,6 @@
 <?php
-include "C:/xampp2/htdocs/ProjetWeb2A33/Controller/evenementE.php"; 
-include "C:/xampp2/htdocs/ProjetWeb2A33/Model/evenement.php"; 
+include "C:/xampp3/htdocs/ProjetWeb2A33/Controller/evenementE.php"; 
+include "C:/xampp3/htdocs/ProjetWeb2A33/Model/evenement.php"; 
 $error = "";
 $evenementE = new evenementE();
 
@@ -13,8 +13,7 @@ if (isset($_POST["id"])) {
         isset($_POST["lieu"]) &&
         isset($_POST["nbrPlace_restante"]) &&
         isset($_POST["nbrPlace_occupe"]) &&
-        isset($_POST["tarification"])&&
-        isset($_POST["typeParking"])
+        isset($_POST["tarification"])
     ) {
         if (
             !empty($_POST["nomE"]) &&
@@ -22,8 +21,7 @@ if (isset($_POST["id"])) {
             !empty($_POST["lieu"]) &&
             !empty($_POST["nbrPlace_restante"]) &&
             !empty($_POST["nbrPlace_occupe"]) &&
-            !empty($_POST["tarification"])&&
-            !empty($_POST["typeParking"])
+            !empty($_POST["tarification"])
         ) {
             $updatedevenement = new Evenement(
                 $_POST['id'],
@@ -32,8 +30,7 @@ if (isset($_POST["id"])) {
                 $_POST['lieu'],
                 $_POST['nbrPlace_restante'],
                 $_POST['nbrPlace_occupe'],
-                $_POST['tarification'],
-                $_POST['typeParking']
+                $_POST['tarification']
             );
             $evenementE->ModifierEvenement($updatedevenement, $_POST['id']);
             header('Location: listevenement.php');
@@ -304,16 +301,6 @@ if (isset($_POST["id"])) {
                 <input type="text" name="lieu" class="form-control" value="<?= $evenement['lieu'] ?>">
               </div>
 
-              <!-- Type de Parking -->
-              <div class="form-group">
-                <label>Type de Parking</label>
-                <select name="typeParking" class="form-control">
-                  <option value="Standard" <?= $evenement['typeParking'] == 'Standard' ? 'selected' : '' ?>>Standard</option>
-                  <option value="VIP" <?= $evenement['typeParking'] == 'VIP' ? 'selected' : '' ?>>VIP</option>
-                  <option value="Electrique" <?= $evenement['typeParking'] == 'Electrique' ? 'selected' : '' ?>>Electrique</option>
-                  <option value="Handicapé" <?= $evenement['typeParking'] == 'Handicapé' ? 'selected' : '' ?>>Handicapé</option>
-                </select>
-              </div>
             </div>
             
             <div class="col-md-6">
@@ -362,7 +349,6 @@ if (isset($_POST["id"])) {
     const nbrPlace_restante = document.getElementsByName('nbrPlace_restante')[0].value;
     const nbrPlace_occupe = document.getElementsByName('nbrPlace_occupe')[0].value;
     const tarification = document.getElementsByName('tarification')[0].value;
-    const typeParking = document.getElementsByName('typeParking')[0].value;
 
     // Validation rules
     if (!nomE) errors.push("Le nom de l'evenement est obligatoire");
@@ -371,7 +357,6 @@ if (isset($_POST["id"])) {
     if (!nbrPlace_restante) errors.push("Le nombre de places restantes est obligatoire");
     if (!nbrPlace_occupe) errors.push("Le nombre de places occupe est obligatoire");
     if (!tarification) errors.push("La tarification est obligatoire");
-    if (!typeParking) errors.push("Le type de parking est obligatoire");
 
     if (nomE.length < 2) errors.push("Le nom est invalide");
     if (lieu.length < 2) errors.push("Le lieu est invalide");

@@ -1,5 +1,5 @@
 <?php
-include "C:/xampp2/htdocs/ProjetWeb2A33/Controller/participationP.php";
+include "C:/xampp3/htdocs/ProjetWeb2A33/Controller/participationP.php";
 
 if (isset($_GET['id'])) {
     $id_participation = $_GET['id']; // ✅ Récupère l'ID passé dans l'URL

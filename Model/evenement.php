@@ -9,7 +9,6 @@ class Evenement
     private ?int $nbrPlace_restante=null;
     private ?int $nbrPlace_occupe=null;
     private ?float $tarification=null;
-    private $typeParking;
     
     // Constructeur sans ID (pour les insertions)
 public function __construct(
@@ -20,7 +19,6 @@ public function __construct(
     int $nbrPlace_restante,
     int $nbrPlace_occupe,
     float $tarification,
-    string $typeParking = 'Standard' // Ajout avec valeur par défaut
 ) {
     $this->idE = $id;
     $this->nomE = $nomE;
@@ -29,14 +27,10 @@ public function __construct(
     $this->nbrPlace_restante = $nbrPlace_restante;
     $this->nbrPlace_occupe = $nbrPlace_occupe;
     $this->tarification = $tarification;
-    $this->typeParking = $typeParking; // Nouvelle propriété
 }
 
 
     // Getters
-    public function getTypeParking() {
-        return $this->typeParking;
-    }
 
     public function getIdE(): int
     {
@@ -74,9 +68,6 @@ public function __construct(
     }
 
     // Setters
-    public function setTypeParking($typeParking) {
-        $this->typeParking = $typeParking;
-    }
 
     public function setIdE(int $idE): void
     {

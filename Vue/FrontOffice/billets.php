@@ -56,6 +56,153 @@ $result = $conn->query($sql);
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
   <style>
+    :root {
+  --primary-color: #0d3f72;       
+  --primary-dark: #08284d;        
+  --secondary-color: #0a1d37;    
+  --accent-color: #3a5cb3;        /* Bleu vif */
+  --light-color: #f8fafc;         /* Fond très légèrement bleuté */
+  --dark-color: #2d3748;          /* Texte foncé doux */
+  --text-color: #4a5568;          /* Texte principal */
+  --section-bg: #f5f7fa;          /* Arrière-plan des sections */
+  --card-bg: #ffffff;             /* Fond des cartes */
+  --border-color: rgba(0,0,0,0.08); /* Bordures subtiles */
+  --gradient: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+}
+    
+    /* Header & Navigation */
+    .header {
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+    }
+    
+    .sitename {
+  font-family: Arial, sans-serif; /* juste changer la police */
+  font-weight: 700;
+  color: var(--secondary-color);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+    
+    .navmenu ul li a {
+      position: relative;
+      color: var(--dark-color);
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    
+    .navmenu ul li a:hover,
+    .navmenu ul li a.active {
+      color: var(--primary-color);
+    }
+    
+    .navmenu ul li a:after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--gradient);
+      transition: width 0.3s ease;
+    }
+    
+    .navmenu ul li a:hover:after,
+    .navmenu ul li a.active:after {
+      width: 100%;
+    }
+    
+    .btn-getstarted {
+      background: var(--gradient);
+      border: none;
+      color: white;
+      font-weight: 600;
+      padding: 10px 25px;
+      border-radius: 50px;
+      box-shadow: 0 5px 15px rgba(74, 166, 255, 0.4);
+      transition: all 0.3s ease;
+    }
+    
+    .btn-getstarted:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(74, 166, 255, 0.6);
+    }
+    
+    /* Hero Section */
+    .page-title {
+      position: relative;
+      padding: 180px 0 120px;
+      background: linear-gradient(rgba(10, 29, 55, 0.85), rgba(10, 29, 55, 0.85)), url('assets/img/55.png') center/cover no-repeat;
+      color: white;
+      text-align: center;
+    }
+    
+    .page-title h1 {
+      font-family: Arial, sans-serif;
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      animation: fadeInDown 1s ease;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    
+    .page-title p {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0 auto 30px;
+      animation: fadeInUp 1s ease;
+      opacity: 0.9;
+    }
+    /* Dropdown styling */
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      min-width: 220px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+      padding: 10px 0;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1000;
+      border: none;
+    }
+  
+    .nav-item.dropdown:hover .dropdown-menu {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+  
+    .dropdown-item {
+      padding: 12px 25px;
+      color: var(--secondary-color) !important;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.3s ease;
+    }
+  
+    .dropdown-item:hover {
+      background: rgba(13, 63, 114, 0.05);
+      padding-left: 30px;
+    }
+  
+    .dropdown-item i {
+      color: var(--primary-color);
+      font-size: 1.1em;
+      width: 24px;
+      text-align: center;
+    }
+
+    /*moi*/
      .card {
       width: 100%;
       aspect-ratio: 1 / 1; /* Rend le cadre parfaitement carré */
@@ -117,123 +264,181 @@ $result = $conn->query($sql);
 
 <body class="services-page">
 
-  <header id="header" class="header d-flex align-items-center fixed-top">
+<header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
-      <a href="index.html" class="logo d-flex align-items-center me-auto">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
-        <!-- <img src="assets/img/logo.png" alt=""> -->
+      <a href="about.php" class="logo d-flex align-items-center me-auto">
         <h1 class="sitename">EasyParki</h1>
       </a>
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="index.php">Home<br></a></li>
-          <li><a href="Stationement.php">Stationnement</a></li>
-          <li><a href="services.php">Services</a></li>
-          <li><a href="vacance.php">Vacances</a></li>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="Stationnement.html">Stationnement</a></li>
+          <li><a href="transport public.html">Vacances</a></li>
+          <li><a href="Covoiturage.html">Covoiturage</a></li>
+          <li><a href="Recharge.html">Service</a></li>
           <li class="dropdown">
              <a href="evenement.php"><span>Événements</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
               <ul>
                 <li><a href="evenement.php">Page Événement</a></li>                
-                <li><a href="option.php">Options Stationnements</a></li>
-                <li><a href="billets.php">Acces Aux Detenteurs De Billets</a></li>
-                <li><a href="listparticipation.php">Planification Et Ajustement De la Duree Du Stationnement</a></li>
-                <li><a href="addparticipation.php">Notifications De Rappel Avant L'evenement</a></li>
-                <li><a href="addparticipation.php">Suggestion De Stationnement Proche</a></li>
-                <li><a href="addparticipation.php">Espace De Stationnement Pour Food Trucks Et Exposant</a></li>
+                <li><a href="billets.php">Vos Billets</a></li>
+                <li><a href="durée.php">Let's Talk!</a></li>
+                <li><a href="map.php">Map</a></li>
+                <li><a href="points_fidelite.php">Fidelite</a></li>
               </ul>
            </li>
-
-          <li><a href="covoiturage.php">Covoiturage</a></li>
-          <li><a href="contact.php">Contact</a></li>
+          <li><a href="contact.html">Contact</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
-      <a class="btn-getstarted" href="creercompte.php">Créer un compte</a>
+
+      <a class="btn-getstarted" href="get-a-quote.html">Créer un compte</a>
 
     </div>
   </header>
 
   <main class="main">
 
-    <!-- Page Title -->
-    <div class="page-title dark-background" data-aos="fade" style="background-image: url(assets/img/page-title-bg.jpg);">
-      <div class="container position-relative">
-        <h1>Evenement</h1>
-        <p>Facilite l’accès et le stationnement lors d’événements sportifs, concerts, salons, etc.</p>
-        <nav class="breadcrumbs">
-          <ol>
-            <li><a href="index.php">Home</a></li>
-            <li class="current">Evenement</li>
-          </ol>
-        </nav>
+    <!-- Hero Section -->
+  <div class="page-title dark-background" data-aos="fade" style="background-image: url(assets/image/evenement.jpg);">
+    <div class="container position-relative">
+      <h1>Obtenez Vos Billets!</h1>
+      <p>Réservez vos billets en un clic et vivez l’événement sans attendre !</p>
+      <div class="mt-4">
+        <a href="index.php" class="btn btn-light btn-lg px-4 me-2">Home</a>
+        <a href="evenement.php" class="btn btn-outline-light btn-lg px-4">Evenements</a>
       </div>
-    </div><!-- End Page Title -->
-
-    
-      
- 
-<style>
-
-    .btn-like {
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-    .btn-like .bi-heart-fill {
-      color: red;
-      transition: transform 0.3s;
-    }
-    .btn-like.liked .bi-heart {
-      display: none;
-    }
-    .btn-like.liked .bi-heart-fill {
-      display: inline-block;
-      transform: scale(1.2);
-    }
-    .btn-like .bi-heart-fill {
-      display: none;
-    }
-    /* Styles existants */
-    .event-card {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        border-radius: 15px !important;
-        overflow: hidden;
-    }
-    
-    .event-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
-    }
-    
-    .price-tag {
-        font-weight: bold;
-        min-width: 80px;
-        display: inline-block;
-    }
-    
-    .event-meta {
-        background-color: #f8f9fa;
-        padding: 12px;
-        border-radius: 10px;
-    }
-    
-    /* Nouveaux styles pour la recherche */
-    .input-group-text {
-        background-color: transparent;
-    }
-    
-    #eventSearch:focus {
-        box-shadow: none;
-        border-color: #ced4da;
-    }
-</style>
-    </section><!-- /Featured Services Section -->
+    </div>
+  </div><!-- End Hero Section -->
 
     <!-- Services Section -->
     <section id="services" class="services section">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <div class="card shadow">
+              <div class="card-header bg-primary text-white">
+                <h3 class="card-title mb-0">Accès au stationnement</h3>
+              </div>
+              <div class="card-body">
+                <form id="accessForm" class="needs-validation" novalidate>
+                  <div class="mb-3">
+                    <label for="email" class="form-label">Email de réservation</label>
+                    <input type="email" class="form-control" id="email" required>
+                    <div class="invalid-feedback">
+                      Veuillez entrer votre email de réservation.
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="telephone" class="form-label">Numéro de téléphone</label>
+                    <input type="tel" class="form-control" id="telephone" maxlength="8" required>
+                    <div class="invalid-feedback">
+                      Veuillez entrer votre numéro de téléphone (8 chiffres).
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary w-100">
+                    Générer mon QR Code d'accès
+                  </button>
+                </form>
+
+                <div id="qrResult" class="mt-4 text-center" style="display: none;">
+                  <div class="alert alert-success">
+                    <h4 class="alert-heading">Votre QR Code est prêt !</h4>
+                    <p>Présentez ce QR Code à l'entrée du parking pour accéder à votre place.</p>
+                  </div>
+                  <div id="qrcode" class="mb-3"></div>
+                  <button class="btn btn-secondary mt-3" onclick="window.print()">
+                    <i class="bi bi-printer"></i> Imprimer le QR Code
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ajout de la bibliothèque QR Code -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+    
+    <script>
+    // Contrôle de saisie pour le téléphone (uniquement chiffres)
+    document.getElementById('telephone').addEventListener('input', function(e) {
+        this.value = this.value.replace(/[^\d]/g, '');
+    });
+
+    document.getElementById('accessForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const email = document.getElementById('email').value;
+        const telephone = document.getElementById('telephone').value;
+        
+        // Vérification de base des entrées
+        if (!email || !telephone) {
+            alert('Veuillez remplir tous les champs');
+            return;
+        }
+
+        // Vérification du format du numéro de téléphone
+        if (!/^\d{8}$/.test(telephone)) {
+            alert('Le numéro de téléphone doit contenir exactement 8 chiffres');
+            return;
+        }
+
+        // Création du contenu du QR code au format vCard
+        const currentDate = new Date().toLocaleString('fr-FR');
+        const qrContent = `BEGIN:VCARD
+VERSION:3.0
+FN:Réservation EasyParki
+EMAIL:${email}
+TEL:${telephone}
+NOTE:Réservation validée le ${currentDate}
+STATUS:CONFIRMED
+END:VCARD`;
+        
+        // Génération du QR Code
+        const qr = qrcode(0, 'M');
+        qr.addData(qrContent);
+        qr.make();
+
+        // Affichage du QR Code
+        const qrDiv = document.getElementById('qrcode');
+        qrDiv.innerHTML = qr.createImgTag(5, 10);
+        
+        // Affichage du conteneur de résultat
+        const qrResult = document.getElementById('qrResult');
+        qrResult.style.display = 'block';
+        
+        // Ajout des détails de la réservation
+        const detailsDiv = document.createElement('div');
+        detailsDiv.className = 'mt-3 alert alert-success';
+        detailsDiv.innerHTML = `
+            <h4>Détails de votre réservation :</h4>
+            <p><strong>Email :</strong> ${email}</p>
+            <p><strong>Téléphone :</strong> ${telephone}</p>
+            <p><strong>Date de validation :</strong> ${currentDate}</p>
+            <p><strong>Statut :</strong> Confirmé ✅</p>
+        `;
+        qrDiv.appendChild(detailsDiv);
+
+        // Ajout du bouton de téléchargement
+        const downloadBtn = document.createElement('button');
+        downloadBtn.className = 'btn btn-primary mt-3';
+        downloadBtn.innerHTML = '<i class="bi bi-download"></i> Télécharger le QR Code';
+        downloadBtn.onclick = function() {
+            const canvas = qrDiv.querySelector('img');
+            const link = document.createElement('a');
+            link.download = 'reservation-qr-code.png';
+            link.href = canvas.src;
+            link.click();
+        };
+        qrDiv.appendChild(downloadBtn);
+
+        // Scroll vers le QR Code
+        qrDiv.scrollIntoView({ behavior: 'smooth' });
+    });
+    </script>
 
     <!-- Testimonials Section -->
     <section id="testimonials" class="testimonials section dark-background">

@@ -1,7 +1,7 @@
 <?php
 $error = "";
-  include "C:/xampp2/htdocs/ProjetWeb2A33/Controller/evenementE.php"; 
-  include "C:/xampp2/htdocs/ProjetWeb2A33/Model/evenement.php"; 
+  include "C:/xampp3/htdocs/ProjetWeb2A33/Controller/evenementE.php"; 
+  include "C:/xampp3/htdocs/ProjetWeb2A33/Model/evenement.php"; 
 
     $evenementE = new evenementE();
     if (
@@ -10,8 +10,7 @@ $error = "";
       isset($_POST["lieu"]) &&
       isset($_POST["nbrPlace_restante"]) &&
       isset($_POST["nbrPlace_occupe"]) &&
-      isset($_POST["tarification"])&&
-      isset($_POST["typeParking"])
+      isset($_POST["tarification"])
   ) {
       if (
           !empty($_POST['nomE']) &&
@@ -19,8 +18,7 @@ $error = "";
           !empty($_POST["lieu"]) &&
           !empty($_POST["nbrPlace_restante"]) &&
           !empty($_POST["nbrPlace_occupe"]) &&
-          !empty($_POST["tarification"])&&
-          !empty($_POST["typeParking"])
+          !empty($_POST["tarification"])
       ) {
           $evenement = new Evenement(
               null,
@@ -29,8 +27,7 @@ $error = "";
               $_POST['lieu'],
               $_POST['nbrPlace_restante'],
               $_POST['nbrPlace_occupe'],
-              $_POST['tarification'],
-              $_POST['typeParking'] 
+              $_POST['tarification']
           );
           $evenementE->AjouterEvenement($evenement);
           header('Location:listevenement.php');
@@ -285,20 +282,6 @@ $error = "";
             <input type="number" class="form-control" name="tarification">
             <span id="error-tarification" class="error-message"></span>
           </div> 
-
-          <!-- Ajout Type de Parking -->
-        <div class="mb-3">
-          <label class="form-label">Type de Parking:</label>
-          <select class="form-control" name="typeParking">
-            <option value="">-- Sélectionnez --</option>
-            <option value="Classique">Classique</option>
-            <option value="VIP">VIP</option>
-            <option value="Électrique">Électrique</option>
-            <option value="Handicapé">Handicapé</option>
-          </select>
-          <span id="error-typeParking" class="error-message"></span>
-        </div>
-
           
           <div class="d-flex justify-content-between">
             <a href="Evenement.php" class="btn btn-secondary">Page Principale</a>
@@ -321,8 +304,7 @@ function validateForm() {
     lieu: document.getElementsByName('lieu')[0].value.trim(),
     nbrPlace_restante: document.getElementsByName('nbrPlace_restante')[0].value.trim(),
     nbrPlace_occupe: document.getElementsByName('nbrPlace_occupe')[0].value.trim(),
-    tarification: document.getElementsByName('tarification')[0].value.trim(),
-    typeParking: document.getElementsByName('typeParking')[0].value.trim()
+    tarification: document.getElementsByName('tarification')[0].value.trim()
   };
 
   // Reset all error messages
@@ -370,10 +352,6 @@ function validateForm() {
     hasErrors = true;
   }
 
-  if (!formFields.typeParking) {
-    document.getElementById('error-typeParking').innerHTML = "Type de parking est requis";
-    hasErrors = true;
-  }
 
   return !hasErrors;
 }

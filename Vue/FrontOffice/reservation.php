@@ -293,7 +293,7 @@ $conn->close();
 
 <body class="evenement-page">
 
-  <header id="header" class="header d-flex align-items-center fixed-top">
+<header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
       <a href="about.php" class="logo d-flex align-items-center me-auto">
@@ -311,12 +311,10 @@ $conn->close();
              <a href="evenement.php"><span>Événements</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
               <ul>
                 <li><a href="evenement.php">Page Événement</a></li>                
-                <li><a href="option.php">Options Stationnements</a></li>
-                <li><a href="billets.php">Acces Aux Detenteurs De Billets</a></li>
-                <li><a href="listparticipation.php">Planification Et Ajustement De la Duree Du Stationnement</a></li>
-                <li><a href="addparticipation.php">Notifications De Rappel Avant L'evenement</a></li>
-                <li><a href="addparticipation.php">Suggestion De Stationnement Proche</a></li>
-                <li><a href="addparticipation.php">Espace De Stationnement Pour Food Trucks Et Exposant</a></li>
+                <li><a href="billets.php">Vos Billets</a></li>
+                <li><a href="durée.php">Let's Talk!</a></li>
+                <li><a href="map.php">Map</a></li>
+                <li><a href="points_fidelite.php">Fidelite</a></li>
               </ul>
            </li>
           <li><a href="contact.html">Contact</a></li>
@@ -330,11 +328,11 @@ $conn->close();
   </header>
 
   <main class="main">
+
     <!-- Hero Section -->
   <div class="page-title dark-background" data-aos="fade" style="background-image: url(assets/image/evenement.jpg);">
     <div class="container position-relative">
       <h1>Réserver Sans Hésiter</h1>
-     
       <div class="mt-4">
         <a href="index.php" class="btn btn-light btn-lg px-4 me-2">Home</a>
         <a href="evenement.php" class="btn btn-outline-light btn-lg px-4">Evenements</a>
@@ -342,8 +340,9 @@ $conn->close();
     </div>
   </div><!-- End Hero Section -->
 
+
   
-    <div class="container py-5" id="reservation-form">
+  <div class="container py-5" id="reservation-form">
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <div class="card border-0 shadow-lg">
@@ -352,80 +351,95 @@ $conn->close();
                 </div>
                 
                 <div class="card-body p-4 p-md-5">
-                    <!-- Progress bar (optionnel) -->
                     <div class="progress mb-4" style="height: 8px;">
-                        <div class="progress-bar bg-success" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 50%;"></div>
                     </div>
                     
-                    <form id="reservation-form" onsubmit="submitReservation(event)" method="POST">
+                    <form id="reservationForm" method="POST">
                         <input type="hidden" name="idE" value="<?= $event['idE'] ?>">
                         
                         <div class="row g-3">
                             <!-- Prénom -->
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="prenom_participant" name="prenom_participant" placeholder=" " required>
+                                    <input type="text" class="form-control" id="prenom_participant" name="prenom_participant" placeholder=" ">
                                     <label for="prenom_participant"><i class="bi bi-person me-2"></i>Prénom</label>
-                                    <div class="invalid-feedback">
-                                        Veuillez entrer votre prénom.
-                                    </div>
+                                    <div class="error-message text-danger small mt-1" id="prenom_error"></div>
                                 </div>
                             </div>
                             
                             <!-- Nom -->
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="nom_participant" name="nom_participant" placeholder=" " required>
+                                    <input type="text" class="form-control" id="nom_participant" name="nom_participant" placeholder=" ">
                                     <label for="nom_participant"><i class="bi bi-person-vcard me-2"></i>Nom</label>
-                                    <div class="invalid-feedback">
-                                        Veuillez entrer votre nom.
-                                    </div>
+                                    <div class="error-message text-danger small mt-1" id="nom_error"></div>
                                 </div>
                             </div>
                             
                             <!-- Email -->
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <input type="email" class="form-control" id="mail_participant" name="mail_participant" placeholder=" " required>
+                                    <input type="text" class="form-control" id="mail_participant" name="mail_participant" placeholder=" ">
                                     <label for="mail_participant"><i class="bi bi-envelope me-2"></i>Email</label>
-                                    <div class="invalid-feedback">
-                                        Veuillez entrer une adresse email valide.
-                                    </div>
+                                    <div class="error-message text-danger small mt-1" id="email_error"></div>
                                 </div>
                             </div>
                             
                             <!-- Téléphone -->
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <input type="tel" class="form-control" id="numTel_participant" name="numTel_participant" placeholder=" " required>
+                                    <input type="text" class="form-control" id="numTel_participant" name="numTel_participant" placeholder=" " maxlength="8">
                                     <label for="numTel_participant"><i class="bi bi-telephone me-2"></i>Numéro de téléphone</label>
-                                    <div class="invalid-feedback">
-                                        Veuillez entrer votre numéro de téléphone.
-                                    </div>
+                                    <div class="error-message text-danger small mt-1" id="telephone_error"></div>
                                 </div>
                             </div>
                             
+                            <!-- Type de stationnement -->
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <select class="form-select" id="type_stationnement" name="type_stationnement">
+                                        <option value="" selected disabled>Choisir un type</option>
+                                        <option value="VIP">VIP</option>
+                                        <option value="Handicape">Handicapé</option>
+                                        <option value="Couvert">Couvert</option>
+                                        <option value="Electrique">Électrique</option>
+                                        <option value="Standard">Standard</option>
+                                    </select>
+                                    <label for="type_stationnement"><i class="bi bi-car-front me-2"></i>Type de stationnement</label>
+                                    <div class="error-message text-danger small mt-1" id="error-type_stationnement"></div>
+                                </div>
+                                <!-- Nouveau div pour l'explication du prix -->
+                                <div class="alert alert-info mt-2" id="price-explanation" style="display: none;">
+                                    <i class="bi bi-info-circle me-2"></i>
+                                    <span id="price-details"></span>
+                                </div>
+                            </div>
+
+                            <!-- Prix de base caché -->
+                            <input type="hidden" id="base_price" value="<?= htmlspecialchars($event['tarification']) ?>">
+
                             <!-- Bouton de soumission -->
                             <div class="col-12 mt-4">
-                                <button type="submit" class="btn btn-success btn-lg w-100 py-3">
+                                <button type="button" class="btn btn-success btn-lg w-100 py-3" onclick="validateAndSubmit()">
                                     <i class="bi bi-check-circle me-2"></i>Confirmer la réservation
                                 </button>
                             </div>
                             
-                            <!-- Assurance (optionnel) -->
+                            <!-- Assurance -->
                             <div class="col-12 mt-3">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="termsCheck" required>
+                                    <input class="form-check-input" type="checkbox" id="termsCheck">
                                     <label class="form-check-label small" for="termsCheck">
                                         Je confirme que les informations fournies sont exactes et j'accepte les conditions générales.
                                     </label>
+                                    <div class="error-message text-danger small mt-1" id="terms_error"></div>
                                 </div>
                             </div>
                         </div>
                     </form>
                 </div>
                 
-                <!-- Pied de carte avec info supplémentaire -->
                 <div class="card-footer bg-light">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="text-muted small">
@@ -443,101 +457,32 @@ $conn->close();
     </div>
 </div>
 
-<style>
-    /* Style personnalisé */
-    #reservation-form .card {
-        border-radius: 15px;
-        overflow: hidden;
-    }
-    
-    #reservation-form .form-control, 
-    #reservation-form .form-select {
-        border-radius: 8px;
-        padding: 16px;
-        border: 1px solid #dee2e6;
-    }
-    
-    #reservation-form .form-floating>label {
-        padding: 1rem 1.25rem;
-        color: #6c757d;
-    }
-    
-    #reservation-form .form-control:focus {
-        border-color: #86b7fe;
-        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
-    }
-    
-    #reservation-form .btn-success {
-        background-color: #28a745;
-        border: none;
-        font-weight: 600;
-        transition: all 0.3s;
-    }
-    
-    #reservation-form .btn-success:hover {
-        background-color: #218838;
-        transform: translateY(-2px);
-    }
-</style>
-
-<script>
-    async function submitReservation(event) {
-  event.preventDefault();
-  const form = event.target;
-  
-  // Validation Bootstrap
-  if (!form.checkValidity()) {
-    form.classList.add('was-validated');
-    return;
-  }
-
-  try {
-    // Envoi AJAX
-    const response = await fetch('submit_reservation.php', {
-      method: 'POST',
-      body: new FormData(form)
-    });
-    
-    const result = await response.json();
-    
-    if (result.success) {
-      // Afficher le popup
-      const modal = new bootstrap.Modal('#confirmationModal');
-      modal.show();
-      
-      // Reset du formulaire
-      form.reset();
-      form.classList.remove('was-validated');
-    } else {
-      alert("Erreur: " + result.message);
-    }
-  } catch (error) {
-    console.error('Erreur:', error);
-    alert('Une erreur réseau est survenue');
-  }
-}
-</script>
-
-    <!-- Popup de confirmation -->
+<!-- Popup de confirmation -->
 <div class="modal fade" id="confirmationModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content border-0 shadow-lg">
       <div class="modal-header border-0 bg-success text-white">
         <h2 class="modal-title fs-3"><i class="bi bi-check-circle-fill me-2"></i> Réservation Confirmée !</h2>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close btn-close-white" onclick="hideModal()"></button>
       </div>
       <div class="modal-body text-center p-5">
-        <div class="mb-4">
-          <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="#28a745" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+        <div class="mb-4 confirmation-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="#28a745" viewBox="0 0 16 16">
             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
           </svg>
         </div>
         <h3 class="h4 mb-3">Merci pour votre réservation !</h3>
-        <p class="mb-4">Votre place est confirmée pour l'événement choisi. Un email de confirmation avec tous les détails vous a été envoyé.</p>
+        <p class="mb-4">Votre place est confirmée pour <span id="eventNameConfirm" class="fw-bold"></span>.</p>
         
-        <div class="alert alert-info text-start">
-          <i class="bi bi-info-circle-fill me-2"></i>
-          <strong>Important :</strong> Conservez bien votre email de confirmation, il vous sera demandé à l'entrée de l'événement.
+        <div class="reservation-details mb-4 text-start bg-light p-3 rounded">
+          <div class="d-flex justify-content-between mb-2">
+            <span class="text-muted">Date:</span>
+            <span id="eventDateConfirm" class="fw-bold"></span>
+          </div>
+          <div class="d-flex justify-content-between">
+            <span class="text-muted">Référence:</span>
+            <span id="reservationId" class="fw-bold text-success"></span>
+          </div>
         </div>
         
         <div class="d-flex justify-content-center gap-3 mt-4">
@@ -554,44 +499,193 @@ $conn->close();
 </div>
 
 <script>
-function showConfirmation(event) {
-  event.preventDefault();
-  
-  // Ici vous devriez envoyer le formulaire via AJAX ou le soumettre normalement
-  // Après validation côté serveur, afficher le modal:
-  
-  var confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
-  confirmationModal.show();
-  
-  // Optionnel: Reset le formulaire après confirmation
-  document.getElementById('reservation-form').reset();
+// Contrôle de saisie pour le téléphone (uniquement chiffres)
+document.getElementById('numTel_participant').addEventListener('input', function(e) {
+    this.value = this.value.replace(/[^\d]/g, '');
+});
+
+async function validateAndSubmit() {
+    // Réinitialiser les messages d'erreur
+    document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+    
+    let isValid = true;
+    const form = document.getElementById('reservationForm');
+    
+    // Validation prénom (minimum 3 caractères)
+    const prenom = document.getElementById('prenom_participant').value.trim();
+    if (prenom === '') {
+        document.getElementById('prenom_error').textContent = 'Le prénom est requis';
+        isValid = false;
+    } else if (prenom.length < 3) {
+        document.getElementById('prenom_error').textContent = 'Minimum 3 caractères';
+        isValid = false;
+    }
+    
+    // Validation nom (minimum 3 caractères)
+    const nom = document.getElementById('nom_participant').value.trim();
+    if (nom === '') {
+        document.getElementById('nom_error').textContent = 'Le nom est requis';
+        isValid = false;
+    } else if (nom.length < 3) {
+        document.getElementById('nom_error').textContent = 'Minimum 3 caractères';
+        isValid = false;
+    }
+    
+    // Validation email
+    const email = document.getElementById('mail_participant').value.trim();
+    if (email === '') {
+        document.getElementById('email_error').textContent = 'L\'email est requis';
+        isValid = false;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        document.getElementById('email_error').textContent = 'Email invalide';
+        isValid = false;
+    }
+    
+    // Validation téléphone (exactement 8 chiffres)
+    const telephone = document.getElementById('numTel_participant').value.trim();
+    if (telephone === '') {
+        document.getElementById('telephone_error').textContent = 'Le téléphone est requis';
+        isValid = false;
+    } else if (!/^\d{8}$/.test(telephone)) {
+        document.getElementById('telephone_error').textContent = '8 chiffres requis';
+        isValid = false;
+    }
+    
+    // Validation checkbox
+    if (!document.getElementById('termsCheck').checked) {
+        document.getElementById('terms_error').textContent = 'Vous devez accepter les conditions';
+        isValid = false;
+    }
+    
+    if (!isValid) return;
+
+    // Afficher le loader
+    const submitBtn = document.querySelector('#reservationForm button[type="button"]');
+    const originalBtnText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Traitement...';
+    submitBtn.disabled = true;
+
+    try {
+        const response = await fetch('submit_reservation.php', {
+            method: 'POST',
+            body: new FormData(form)
+        });
+        
+        const result = await response.json();
+        
+        submitBtn.innerHTML = originalBtnText;
+        submitBtn.disabled = false;
+        
+        if (result.success) {
+            // Redirection vers la page de paiement
+            window.location.href = result.redirect_url;
+        } else {
+            alert("Erreur: " + (result.message || 'Erreur lors de la réservation'));
+        }
+    } catch (error) {
+        console.error('Erreur:', error);
+        submitBtn.innerHTML = originalBtnText;
+        submitBtn.disabled = false;
+        alert('Une erreur réseau est survenue');
+    }
 }
+
+// Gestion du modal
+function showModal() {
+    const modal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+    modal.show();
+}
+
+function hideModal() {
+    const modal = bootstrap.Modal.getInstance(document.getElementById('confirmationModal'));
+    modal.hide();
+}
+
+function redirectToEvents() {
+    window.location.href = 'evenements.php';
+}
+
+function printTicket() {
+    // Implémentation de l'impression ici
+    alert('Fonctionnalité d\'impression à implémenter');
+}
+
+// Ajout de l'écouteur d'événements pour le changement de type de stationnement
+document.getElementById('type_stationnement').addEventListener('change', function() {
+    const basePrice = parseFloat(document.getElementById('base_price').value);
+    const selectedType = this.value;
+    const priceExplanation = document.getElementById('price-explanation');
+    const priceDetails = document.getElementById('price-details');
+    
+    // Définition des multiplicateurs et des explications
+    const parkingTypes = {
+        'VIP': {
+            multiplier: 2.0,
+            explanation: 'Prix doublé pour un stationnement VIP premium avec service voiturier'
+        },
+        'Handicape': {
+            multiplier: 0.5,
+            explanation: '50% de réduction pour les personnes à mobilité réduite'
+        },
+        'Couvert': {
+            multiplier: 1.3,
+            explanation: '30% supplémentaire pour un stationnement couvert et protégé'
+        },
+        'Electrique': {
+            multiplier: 1.5,
+            explanation: '50% supplémentaire incluant la recharge électrique'
+        },
+        'Standard': {
+            multiplier: 1.0,
+            explanation: 'Tarif standard de base'
+        }
+    };
+
+    if (selectedType && parkingTypes[selectedType]) {
+        const finalPrice = basePrice * parkingTypes[selectedType].multiplier;
+        priceDetails.innerHTML = `
+            <strong>${selectedType}</strong> : ${parkingTypes[selectedType].explanation}<br>
+            Prix de base : ${basePrice} DT<br>
+            Prix final : <strong>${finalPrice.toFixed(2)} DT</strong>
+        `;
+        priceExplanation.style.display = 'block';
+    } else {
+        priceExplanation.style.display = 'none';
+    }
+});
 </script>
 
 <style>
-  .confirmation-animation {
+#reservation-form .card {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.error-message {
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+}
+
+.confirmation-icon {
     animation: bounceIn 0.6s;
-  }
-  
-  @keyframes bounceIn {
+}
+
+@keyframes bounceIn {
     0% { transform: scale(0.8); opacity: 0; }
     50% { transform: scale(1.05); }
     100% { transform: scale(1); opacity: 1; }
-  }
-  
-  #confirmationModal .modal-content {
-    border-radius: 15px;
-    overflow: hidden;
-  }
-  
-  #confirmationModal .modal-header {
+}
+
+.reservation-details {
+    border-left: 4px solid #28a745;
+    background-color: #f8f9fa;
+}
+
+#confirmationModal .modal-header {
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
-  }
-  
-  #confirmationModal .btn-close {
-    font-size: 0.8rem;
-  }
+    padding: 1.5rem;
+}
 </style>
     
   </main>

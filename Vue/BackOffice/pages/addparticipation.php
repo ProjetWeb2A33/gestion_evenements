@@ -1,24 +1,39 @@
 <?php 
+// Récupération des événements depuis la base
+try {
+    $pdo = new PDO("mysql:host=localhost;dbname=gestion_evenements", "root", "");
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    $stmt = $pdo->query("SELECT idE, nomE FROM evenement");
+    $evenements = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    echo "Erreur : " . $e->getMessage();
+    $evenements = [];
+}
+
+// Traitement du formulaire
 $error = "";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    include 'C:/xampp2/htdocs/ProjetWeb2A33/Controller/participationP.php';
-    include 'C:/xampp2/htdocs/ProjetWeb2A33/Model/participation.php';
+    include 'C:/xampp3/htdocs/ProjetWeb2A33/Controller/participationP.php';
+    include 'C:/xampp3/htdocs/ProjetWeb2A33/Model/participation.php';
 
     $pc = new participationP();
     $p = new Participation(
-        (int)$_POST['idE'],
-        $_POST['nom_participant'],
-        $_POST['prenom_participant'],
-        $_POST['numTel_participant'],
-        $_POST['mail_participant']
-    );
-    
+      (int)$_POST['idE'],
+      $_POST['nom_participant'],
+      $_POST['prenom_participant'],
+      $_POST['numTel_participant'],
+      $_POST['mail_participant'],
+      $_POST['type_stationnement']  // Nouveau champ ajouté ici
+  );
+  
     $pc->AjouterParticipation($p);
 
     header('Location: listparticipation.php');
     exit();
 }
 ?>
+
 
 
 <!DOCTYPE html>
@@ -238,11 +253,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="error-message" id="errorMessage"><?php echo $error; ?></div>
         
         <form method="POST" onsubmit="return validateForm()" novalidate>
-          <div class="mb-3">
-            <label class="form-label">ID Evenement</label>
-            <input type="number" class="form-control" name="idE" id="idE" />
-            <span id="error-idE" class="error-message"></span>
-          </div>
+        <div class="mb-3">
+         <label class="form-label">ID Événement</label>
+          <select class="form-control" name="idE" id="idE" required>
+           <option value="">-- Sélectionner un événement --</option>
+            <?php foreach ($evenements as $event): ?>
+             <option value="<?= htmlspecialchars($event['idE']) ?>">
+               <?= htmlspecialchars($event['idE']) ?> - <?= htmlspecialchars($event['nomE']) ?>
+              </option>
+            <?php endforeach; ?>
+          </select>
+          <span id="error-idE" class="error-message"></span>
+       </div>
 
           <div class="mb-3">
             <label class="form-label">Nom</label>
@@ -268,6 +290,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <span id="error-mail_participant" class="error-message"></span>
           </div>
 
+          <div class="mb-3">
+            <label class="form-label">Type de stationnement</label>
+            <select class="form-control" name="type_stationnement" id="type_stationnement">
+              <option value="" disabled selected>-- Sélectionnez un type --</option>
+              <option value="VIP">VIP</option>
+              <option value="Handicape">Handicapé</option>
+              <option value="Couvert">Couvert</option>
+              <option value="Electrique">Électrique</option>
+              <option value="Standard">Standard</option>
+            </select>
+            <span id="error-type_stationnement" class="error-message"></span>
+          </div>
+
+
           <div class="d-flex justify-content-between">
            <a href="Evenement.php" class="btn btn-secondary">Page Principale</a>
            <button type="submit" class="btn btn-primary">Soumettre</button>
@@ -286,7 +322,8 @@ function validateForm() {
     'nom_participant',
     'prenom_participant',
     'numTel_participant',
-    'mail_participant'
+    'mail_participant',
+    'type_stationnement'
   ];
 
   let hasErrors = false;
@@ -303,6 +340,7 @@ function validateForm() {
   const prenom = document.getElementById('prenom_participant').value.trim();
   const tel = document.getElementById('numTel_participant').value.trim();
   const mail = document.getElementById('mail_participant').value.trim();
+  const typeStationnement = document.getElementById('type_stationnement').value.trim(); // Ajout ici
 
   // Validation
   if (!idE) {

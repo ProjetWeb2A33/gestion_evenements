@@ -1,6 +1,6 @@
 <?php
-include "C:/xampp2/htdocs/ProjetWeb2A33/Controller/evenementE.php";
-include "C:/xampp2/htdocs/ProjetWeb2A33/Model/evenement.php"; 
+include "C:/xampp3/htdocs/ProjetWeb2A33/Controller/evenementE.php";
+include "C:/xampp3/htdocs/ProjetWeb2A33/Model/evenement.php"; 
 
 $pc = new evenementE();
 $liste = $pc->ListeEvenements();
@@ -279,7 +279,6 @@ $liste = $pc->ListeEvenements();
             <th>Nombre Places <br> Disponibles</th>
             <th>Nombre Place <br> Occupée</th>
             <th>Tarification</th>
-            <th>Type de <br> Parking</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -293,7 +292,6 @@ $liste = $pc->ListeEvenements();
             <td><?= $evenement['nbrPlace_restante'] ?></td>
             <td><?= $evenement['nbrPlace_occupe'] ?></td>
             <td><?= $evenement['tarification'] ?> Dt</td>
-            <td><?= htmlspecialchars($evenement['typeParking']) ?></td>
             <td>
                 <div class="d-flex flex-column gap-2">
                     <!-- Bouton Modifier -->

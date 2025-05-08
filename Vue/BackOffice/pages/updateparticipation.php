@@ -1,8 +1,8 @@
 <?php
-include "C:/xampp2/htdocs/ProjetWeb2A33/Controller/participationP.php"; 
-include "C:/xampp2/htdocs/ProjetWeb2A33/Model/participation.php"; 
-include "C:/xampp2/htdocs/ProjetWeb2A33/Controller/evenementE.php";
-include "C:/xampp2/htdocs/ProjetWeb2A33/Model/evenement.php";
+include "C:/xampp3/htdocs/ProjetWeb2A33/Controller/participationP.php"; 
+include "C:/xampp3/htdocs/ProjetWeb2A33/Model/participation.php"; 
+include "C:/xampp3/htdocs/ProjetWeb2A33/Controller/evenementE.php";
+include "C:/xampp3/htdocs/ProjetWeb2A33/Model/evenement.php";
 
 $error = "";
 $participationP = new participationP();
@@ -19,7 +19,8 @@ if (isset($_POST["id"])) {
           !empty($_POST["nom_participant"]) &&
           !empty($_POST["prenom_participant"]) &&
           !empty($_POST["numTel_participant"]) &&
-          !empty($_POST["mail_participant"]) 
+          !empty($_POST["mail_participant"])&&
+          !empty($_POST["type_stationnement"])
       ) {
           // ✅ Correction ici : suppression de la virgule finale (sinon erreur de syntaxe)
           $updateparticipation = new Participation(
@@ -28,7 +29,8 @@ if (isset($_POST["id"])) {
               $_POST['nom_participant'],
               $_POST['prenom_participant'],
               $_POST['numTel_participant'],
-              $_POST['mail_participant']
+              $_POST['mail_participant'],
+              $_POST['type_stationnement']
           );
 
           // ✅ Appel à la méthode de modification
@@ -319,6 +321,18 @@ if (isset($_POST["id"])) {
                 <input type="text" name="mail_participant" class="form-control" value="<?= $participationData['mail_participant'] ?>">
               </div>
             </div>
+
+            <div class="form-group">
+              <label>Type de stationnement</label>
+              <select name="type_stationnement" class="form-control">
+                <option value="VIP" <?= ($participationData['type_stationnement'] === 'VIP') ? 'selected' : '' ?>>VIP</option>
+                <option value="Handicape" <?= ($participationData['type_stationnement'] === 'Handicape') ? 'selected' : '' ?>>Handicapé</option>
+                <option value="Couvert" <?= ($participationData['type_stationnement'] === 'Couvert') ? 'selected' : '' ?>>Couvert</option>
+                <option value="Electrique" <?= ($participationData['type_stationnement'] === 'Electrique') ? 'selected' : '' ?>>Électrique</option>
+                <option value="Standard" <?= ($participationData['type_stationnement'] === 'Standard') ? 'selected' : '' ?>>Standard</option>
+              </select>
+            </div>
+
               
           <div class="text-end mt-4">
             <button type="submit" class="btn btn-primary">

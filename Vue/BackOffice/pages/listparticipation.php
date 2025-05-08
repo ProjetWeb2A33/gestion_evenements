@@ -1,6 +1,6 @@
 <?php
-include "C:/xampp2/htdocs/ProjetWeb2A33/Controller/participationP.php"; 
-include "C:/xampp2/htdocs/ProjetWeb2A33/Model/participation.php"; 
+include "C:/xampp3/htdocs/ProjetWeb2A33/Controller/participationP.php"; 
+include "C:/xampp3/htdocs/ProjetWeb2A33/Model/participation.php"; 
 
 $pc = new participationP();
 $liste = $pc->ListeParticipations();
@@ -261,12 +261,13 @@ $liste = $pc->ListeParticipations();
         <table class="table table-striped align-middle">
           <thead>
             <tr>
-              <th>ID Participant</th> 
-              <th>ID Evenement</th>
-              <th>Nom Participant</th>
-              <th>Prénom Participant</th>
+              <th>ID <br> Participant</th> 
+              <th>ID <br> Evenement</th>
+              <th>Nom <br> Participant</th>
+              <th>Prénom <br> Participant</th>
               <th>Num Tel</th>
               <th>E-mail</th>
+              <th>Type de <br> stationnement</th> 
               <th>Actions</th>
               
             </tr>
@@ -280,6 +281,7 @@ $liste = $pc->ListeParticipations();
               <td><?= $participation['prenom_participant'] ?></td>
               <td><?= $participation['numTel_participant'] ?></td>
               <td><?= $participation['mail_participant'] ?></td>
+              <td><?= $participation['type_stationnement'] ?></td>
               <td>
               <div class="d-flex flex-column gap-2">
                 <!-- Bouton Modifier -->

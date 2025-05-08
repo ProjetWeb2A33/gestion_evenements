@@ -1,6 +1,6 @@
 <?php 
 
-include_once ("C:/xampp2/htdocs/ProjetWeb2A33/config/config.php");
+include_once ("C:/xampp3/htdocs/ProjetWeb2A33/config/config.php");
 
 class ParticipationP {
 
@@ -17,21 +17,23 @@ class ParticipationP {
 
     // Ajouter une participation
     public function AjouterParticipation($p) {
-        $db = config::getConnexion();
-        try {
-            $req = $db->prepare('
-                INSERT INTO participation (idE, nom_participant, prenom_participant, numTel_participant, mail_participant)
-                VALUES (:idE, :nom, :prenom, :tel, :mail)
-            ');
-            $req->execute([
-                'idE' => $p->getIdE(),
-                'nom' => $p->getNomParticipant(),
-                'prenom' => $p->getPrenomParticipant(),
-                'tel' => $p->getNumTelParticipant(),
-                'mail' => $p->getMailParticipant()
+      $db = config::getConnexion();
+      try {
+          $req = $db->prepare('
+            INSERT INTO participation (
+                idE, nom_participant, prenom_participant, numTel_participant, mail_participant, type_stationnement
+            ) VALUES (:idE, :nom, :prenom, :tel, :mail, :type_stationnement)
+           ');
+          $req->execute([
+            'idE' => $p->getIdE(),
+            'nom' => $p->getNomParticipant(),
+            'prenom' => $p->getPrenomParticipant(),
+            'tel' => $p->getNumTelParticipant(),
+            'mail' => $p->getMailParticipant(),
+            'type_stationnement' => $p->getTypeStationnement()  // nouveau champ
             ]);
         } catch (Exception $e) {
-            die('Erreur : ' . $e->getMessage());
+          die('Erreur : ' . $e->getMessage());
         }
     }
 
@@ -73,7 +75,7 @@ class ParticipationP {
     }
 
     // Modifier une participation
-    public function ModifierParticipation($p ,$id) {
+    public function ModifierParticipation($p, $id) {
         $db = config::getConnexion();
         try {
             $req = $db->prepare(
@@ -82,19 +84,71 @@ class ParticipationP {
                     nom_participant = :nom,
                     prenom_participant = :prenom,
                     numTel_participant = :tel,
-                    mail_participant = :mail
-                WHERE id_participation = :id
-            ');
+                    mail_participant = :mail,
+                    type_stationnement = :type_stationnement
+                WHERE id_participation = :id'
+            );
             $req->execute([
                 'idE' => $p->getIdE(),
                 'nom' => $p->getNomParticipant(),
                 'prenom' => $p->getPrenomParticipant(),
                 'tel' => $p->getNumTelParticipant(),
                 'mail' => $p->getMailParticipant(),
+                'type_stationnement' => $p->getTypeStationnement(), // ajout ici
                 'id' => $id
             ]);
         } catch (Exception $e) {
             die('Erreur : ' . $e->getMessage());
+        }
+    }
+
+    // Mettre à jour les points de fidélité
+    public function mettreAJourPointsFidelite($idParticipation, $montant) {
+        try {
+            $db = config::getConnexion();
+            $points = floor($montant / 10); // 1 point pour chaque 10 DT
+            
+            $query = $db->prepare("UPDATE participation SET points_fidelite = points_fidelite + :points WHERE id_participation = :id");
+            return $query->execute([
+                'points' => $points,
+                'id' => $idParticipation
+            ]);
+        } catch (Exception $e) {
+            error_log("Erreur lors de la mise à jour des points : " . $e->getMessage());
+            return false;
+        }
+    }
+
+    // Récupérer les points de fidélité
+    public function getPointsFidelite($email) {
+        try {
+            $db = config::getConnexion();
+            $query = $db->prepare("SELECT SUM(points_fidelite) as total_points FROM participation WHERE mail_participant = :email");
+            $query->execute(['email' => $email]);
+            $result = $query->fetch();
+            return $result['total_points'] ?? 0;
+        } catch (Exception $e) {
+            error_log("Erreur lors de la récupération des points : " . $e->getMessage());
+            return 0;
+        }
+    }
+
+    // Récupérer l'historique des participations
+    public function getHistoriqueParticipations($email) {
+        try {
+            $db = config::getConnexion();
+            $query = $db->prepare(
+                "SELECT p.*, e.nomE, e.tarification 
+                 FROM participation p 
+                 JOIN evenement e ON p.idE = e.idE 
+                 WHERE p.mail_participant = :email 
+                 ORDER BY p.id_participation DESC"
+            );
+            $query->execute(['email' => $email]);
+            return $query->fetchAll();
+        } catch (Exception $e) {
+            error_log("Erreur lors de la récupération de l'historique : " . $e->getMessage());
+            return [];
         }
     }
 }

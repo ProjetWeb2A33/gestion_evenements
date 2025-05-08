@@ -8,7 +8,7 @@ try {
     $pdo->exec("SET NAMES utf8mb4");
 
     // 2. Validation
-    $required = ['idE', 'nom_participant', 'prenom_participant', 'mail_participant', 'numTel_participant'];
+    $required = ['idE', 'nom_participant', 'prenom_participant', 'mail_participant', 'numTel_participant','type_stationnement'];
     foreach ($required as $field) {
         if (empty($_POST[$field])) {
             throw new Exception("Le champ $field est requis");
@@ -25,20 +25,23 @@ try {
         ':nom' => htmlspecialchars($_POST['nom_participant']),
         ':prenom' => htmlspecialchars($_POST['prenom_participant']),
         ':email' => filter_var($_POST['mail_participant'], FILTER_SANITIZE_EMAIL),
-        ':tel' => preg_replace('/[^0-9]/', '', $_POST['numTel_participant'])
+        ':tel' => preg_replace('/[^0-9]/', '', $_POST['numTel_participant']),
+        ':type_stationnement' => htmlspecialchars($_POST['type_stationnement'])
     ];
 
     // 4. Insertion
     $stmt = $pdo->prepare("INSERT INTO participation 
-                          (idE, nom_participant, prenom_participant, mail_participant, numTel_participant) 
-                          VALUES (:idE, :nom, :prenom, :email, :tel)");
+                          (idE, nom_participant, prenom_participant, mail_participant, numTel_participant,type_stationnement) 
+                          VALUES (:idE, :nom, :prenom, :email, :tel, :type_stationnement)");
     $stmt->execute($data);
 
-    // 5. Réponse succès
+    // 5. Réponse succès avec URL de redirection
+    $reservation_id = $pdo->lastInsertId();
     echo json_encode([
         'success' => true,
         'message' => 'Réservation confirmée avec succès 🎉',
-        'reservation_id' => $pdo->lastInsertId() // Optionnel : ID généré
+        'reservation_id' => $reservation_id,
+        'redirect_url' => 'paiement.php?id=' . $reservation_id . '&idE=' . $data[':idE'] . '&type=' . urlencode($data[':type_stationnement'])
     ]);
 
 } catch (Exception $e) {

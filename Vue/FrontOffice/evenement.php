@@ -277,12 +277,10 @@ $result = $conn->query($sql);
              <a href="evenement.php"><span>Événements</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
               <ul>
                 <li><a href="evenement.php">Page Événement</a></li>                
-                <li><a href="option.php">Options Stationnements</a></li>
-                <li><a href="billets.php">Acces Aux Detenteurs De Billets</a></li>
-                <li><a href="listparticipation.php">Planification Et Ajustement De la Duree Du Stationnement</a></li>
-                <li><a href="addparticipation.php">Notifications De Rappel Avant L'evenement</a></li>
-                <li><a href="addparticipation.php">Suggestion De Stationnement Proche</a></li>
-                <li><a href="addparticipation.php">Espace De Stationnement Pour Food Trucks Et Exposant</a></li>
+                <li><a href="billets.php">Vos Billets</a></li>
+                <li><a href="durée.php">Let's Talk!</a></li>
+                <li><a href="map.php">Map</a></li>
+                <li><a href="points_fidelite.php">Fidelite</a></li>
               </ul>
            </li>
           <li><a href="contact.html">Contact</a></li>
@@ -654,80 +652,6 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
 
     </section><!-- /Testimonials Section -->
-
-    <!-- Faq Section -->
-    <section id="faq" class="faq section">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <span>Questions Fréquentes</span>
-        <h2>Questions Fréquentes</h2>
-        <p>"Des questions sur le stationnement pour vos événements ? Découvrez nos réponses rapides pour une expérience de stationnement fluide et sans stress !"</p>
-      </div><!-- End Section Title -->
-
-      <div class="container">
-
-        <div class="row justify-content-center">
-
-          <div class="col-lg-10">
-
-            <div class="faq-container">
-
-              <div class="faq-item faq-active" data-aos="fade-up" data-aos-delay="200">
-                <i class="faq-icon bi bi-question-circle"></i>
-                <h3>Comment puis-je réserver une place de stationnement pour un événement ?</h3>
-                <div class="faq-content">
-                  <p>Vous pouvez réserver une place de stationnement directement sur notre plateforme en ligne. Sélectionnez l'événement auquel vous souhaitez assister, choisissez votre emplacement et effectuez votre réservation en quelques clics.</p>
-                </div>
-                <i class="faq-toggle bi bi-chevron-right"></i>
-              </div><!-- End Faq item-->
-
-              <div class="faq-item" data-aos="fade-up" data-aos-delay="300">
-                <i class="faq-icon bi bi-question-circle"></i>
-                <h3> Puis-je modifier ma réservation après l'avoir confirmée ?</h3>
-                <div class="faq-content">
-                  <p>Oui, vous pouvez ajuster la durée de votre stationnement ou modifier votre réservation en temps réel, selon la disponibilité des places. Vous recevrez une confirmation instantanée de toute modification.</p>
-                </div>
-                <i class="faq-toggle bi bi-chevron-right"></i>
-              </div><!-- End Faq item-->
-
-              <div class="faq-item" data-aos="fade-up" data-aos-delay="400">
-                <i class="faq-icon bi bi-question-circle"></i>
-                <h3>Que faire si le stationnement réservé est complet ?</h3>
-                <div class="faq-content">
-                  <p>Si le stationnement réservé est complet, le module vous proposera des alternatives proches avec des informations sur la distance et le temps de trajet à pied jusqu'à l'événement.</p>
-                </div>
-                <i class="faq-toggle bi bi-chevron-right"></i>
-              </div><!-- End Faq item-->
-
-              <div class="faq-item" data-aos="fade-up" data-aos-delay="500">
-                <i class="faq-icon bi bi-question-circle"></i>
-                <h3> Le service de stationnement est-il disponible pour tous les types d'événements ?</h3>
-                <div class="faq-content">
-                  <p>Oui, le module EasyParki est conçu pour fonctionner avec une variété d'événements, y compris les concerts, les compétitions sportives, les salons et autres événements de grande envergure.</p>
-                </div>
-                <i class="faq-toggle bi bi-chevron-right"></i>
-              </div><!-- End Faq item-->
-
-              <div class="faq-item" data-aos="fade-up" data-aos-delay="600">
-                <i class="faq-icon bi bi-question-circle"></i>
-                <h3>Est-ce que le stationnement est garanti même si j'arrive en retard ?</h3>
-                <div class="faq-content">
-                  <p>Oui, une fois votre réservation confirmée, votre place de stationnement est garantie, peu importe votre heure d'arrivée. Vous pouvez également ajuster la durée de stationnement si nécessaire.</p>
-                </div>
-                <i class="faq-toggle bi bi-chevron-right"></i>
-              </div><!-- End Faq item-->
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section><!-- /Faq Section -->
-
   </main>
 
   <footer id="footer" class="footer dark-background">

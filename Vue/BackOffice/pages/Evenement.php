@@ -492,29 +492,6 @@ try {
                     <p class="card-text">🎟️ Places restantes : <?= $event['nbrPlace_restante'] ?></p>
                     <p class="card-text">🚫 Places occupées : <?= $event['nbrPlace_occupe'] ?></p>
                     <p class="card-text">💰 Prix : <?= $event['tarification'] ?> Dt</p>
-
-                    <!-- Affichage du type de parking -->
-                    <p class="card-text">
-                        🚗 Type de Parking : 
-                        <span class="badge 
-                            <?php 
-                                // Choisir une couleur de badge en fonction du type de parking
-                                switch($event['typeParking']) {
-                                    case 'VIP':
-                                        echo 'bg-danger'; // Rouge pour VIP
-                                        break;
-                                    case 'Handicapé':
-                                        echo 'bg-warning'; // Jaune pour handicapé
-                                        break;
-                                    default:
-                                        echo 'bg-success'; // Vert pour Standard
-                                        break;
-                                }
-                            ?>
-                        ">
-                            <?= htmlspecialchars($event['typeParking']) ?>
-                        </span>
-                    </p>
                 </div>
             </div>
         </div>
@@ -559,6 +536,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </button>
 <script>
   const events = <?= json_encode($evenements) ?>;
+  console.log(events);
 </script>
 <!-- Script jsPDF (ajoutez dans le <head> ou avant </body>) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -572,11 +550,11 @@ document.addEventListener('DOMContentLoaded', function() {
     doc.setTextColor(40);
     doc.text('Liste des Événements', 105, 15, { align: 'center' });
 
-    // Style contenu
+  
     doc.setFontSize(12);
     let y = 30;
 
-    // Génération dynamique des événements
+    
     events.forEach(event => {
       doc.setFont(undefined, 'bold');
       doc.text(`ID = ${event.idE}`, 14, y);
@@ -596,7 +574,7 @@ document.addEventListener('DOMContentLoaded', function() {
       doc.text(`- Tarif : ${event.tarification} Dt`, 20, y);
       y += 10;
 
-      // Saut de page si nécessaire
+
       if (y > 270) {
         doc.addPage();
         y = 20;
